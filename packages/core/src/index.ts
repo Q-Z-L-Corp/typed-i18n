@@ -18,27 +18,7 @@ export interface JSONObject {
 export interface JSONArray extends Array<JSONValue> {}
 
 // -------------------------
-// Resource definitions (legacy - kept for backward compatibility)
-// -------------------------
-export const defineResource = <T extends JSONObject>(
-	lang: Language,
-	translation: T,
-) => ({ lang, translation }) as const;
-
-export function defineTranslations<Ref extends JSONObject>(
-	...resources: {
-		lang: Language;
-		translation: Ref;
-	}[]
-): { [K in (typeof resources)[number]["lang"] as Language]: Ref } {
-	return Object.assign(
-		{},
-		...resources.map((r) => ({ [r.lang]: r.translation })),
-	);
-}
-
-// -------------------------
-// Module definitions (modern API)
+// Module definitions
 // -------------------------
 export interface I18nModule<
 	Namespace extends string = string,
@@ -190,7 +170,7 @@ export type LocalesFromModules<TModules extends Record<string, I18nModule>> =
 	keyof TModules[keyof TModules]["translations"] & string;
 
 // -------------------------
-// I18n function (modern module-based API)
+// I18n function
 // -------------------------
 export interface I18nOptions<TModules extends Record<string, I18nModule>> {
 	/** Current active locale */
@@ -338,66 +318,4 @@ export function createI18n<TModules extends Record<string, I18nModule>>(
 	} as I18nInstance<TModules>;
 
 	return instance;
-}
-
-// -------------------------
-// Legacy I18n function (kept for backward compatibility)
-// -------------------------
-export function createI18nLegacy<
-	TTranslations extends Record<string, JSONObject>,
->(translations: TTranslations) {
-	type Locale = keyof TTranslations & string;
-	type Segments = TTranslations[Locale];
-	type Key = Paths<Segments>;
-
-	function getFromPath(obj: any, path: string) {
-		if (!path) return undefined;
-		const parts = path.split(".");
-		let cur = obj;
-		for (const p of parts) {
-			if (cur == null) return undefined;
-			cur = cur[p];
-		}
-		return cur;
-	}
-
-	function interpolate(template: string, params?: Params) {
-		if (!params) return template;
-		return template.replace(/\{\{\s*([^}]+)\s*\}\}/g, (_, key) => {
-			const v = params[key.trim()];
-			return v == null ? "" : String(v);
-		});
-	}
-
-	function t<L extends Locale, K extends Paths<TTranslations[L]>>(
-		locale: L,
-		key: K,
-		params?: Params,
-	): string {
-		const seg = getFromPath(translations[locale], String(key));
-		if (typeof seg === "string") return interpolate(seg, params);
-		if (seg == null) return String(key);
-		return String(seg);
-	}
-
-	function localeObj<L extends Locale>(locale: L): TTranslations[L] {
-		return translations[locale];
-	}
-
-	return { t, localeObj } as const;
-}
-
-// -------------------------
-// Merge multiple translations
-// -------------------------
-export function mergeTranslations<T extends Record<string, JSONObject>>(
-	...transList: T[]
-): T {
-	return Object.assign({}, ...transList);
-}
-
-export function mergeTranslationModules<T extends Record<string, any>>(
-	...modules: T[]
-): T {
-	return Object.assign({}, ...modules);
 }

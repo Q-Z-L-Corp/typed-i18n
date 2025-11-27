@@ -215,29 +215,6 @@ const i18n2 = i18n.addModule(settingsModule);
 i18n2.t('settings.key'); // ✅ Fully typed!
 ```
 
-## Migration from Legacy API
-
-The library still supports the old API for backward compatibility:
-
-```typescript
-// Old API (still works)
-import { defineResource, defineTranslations, createI18nLegacy } from '@qzl/typed-i18n';
-
-const tr = defineTranslations(
-  defineResource('en', en),
-  defineResource('fr', fr)
-);
-
-const i18n = createI18nLegacy(tr);
-i18n.t('en', 'key');  // Pass locale to each call
-```
-
-**Migration to new API:**
-1. Use `defineModule()` instead of `defineResource()`/`defineTranslations()`
-2. Use `createI18n()` instead of `createI18nLegacy()`
-3. Remove locale parameter from `t()` calls
-4. Use `namespace.key` syntax
-
 ## TypeScript Tips
 
 ### ⚠️ Always Provide the Reference Type
