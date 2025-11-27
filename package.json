@@ -10,7 +10,7 @@
 	],
 	"scripts": {
 		"prepare": "husky",
-		"build": "tsc",
+		"build": "tsup",
 		"test": "vitest",
 		"lint": "biome check",
 		"format": "biome format --write"
@@ -37,5 +37,18 @@
 		"*.{js,jsx,ts,tsx,json,css,yml,yaml}": [
 			"biome format --write"
 		]
+	},
+	"tsup": {
+		"entry": [
+			"src/index.ts"
+		],
+		"dts": true,
+		"format": [
+			"cjs",
+			"esm"
+		],
+		"outDir": "dist",
+		"splitting": true,
+		"clean": true
 	}
 }
