@@ -1,0 +1,38 @@
+{
+	"name": "@qzl/typed-i18n",
+	"version": "1.0.0",
+	"description": "Type-safe i18n library with zero dependencies",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"clean": "rm -rf dist"
+	},
+	"keywords": [
+		"i18n",
+		"internationalization",
+		"typescript",
+		"type-safe",
+		"translations"
+	],
+	"author": "Errong Leng <errong.leng@gmail.com>",
+	"license": "MIT",
+	"devDependencies": {
+		"tsup": "^8.5.1",
+		"typescript": "^5.0.0",
+		"vitest": "^4.0.14"
+	}
+}

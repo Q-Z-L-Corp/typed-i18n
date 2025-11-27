@@ -1,0 +1,45 @@
+{
+	"name": "@qzl/typed-i18n-react",
+	"version": "1.0.0",
+	"description": "React bindings for @qzl/typed-i18n",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup src/index.tsx --format cjs,esm --dts --external react",
+		"test": "echo 'No tests yet'",
+		"test:watch": "vitest",
+		"clean": "rm -rf dist"
+	},
+	"keywords": [
+		"i18n",
+		"react",
+		"internationalization",
+		"typescript",
+		"hooks"
+	],
+	"author": "Errong Leng <errong.leng@gmail.com>",
+	"license": "MIT",
+	"peerDependencies": {
+		"@qzl/typed-i18n": "workspace:*",
+		"react": "^18.0.0"
+	},
+	"devDependencies": {
+		"@types/react": "^18.2.0",
+		"@testing-library/react": "^14.0.0",
+		"react": "^18.2.0",
+		"tsup": "^8.5.1",
+		"typescript": "^5.0.0",
+		"vitest": "^4.0.14"
+	}
+}

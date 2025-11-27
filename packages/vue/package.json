@@ -1,0 +1,43 @@
+{
+	"name": "@qzl/typed-i18n-vue",
+	"version": "1.0.0",
+	"description": "Vue bindings for @qzl/typed-i18n",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts --external vue",
+		"test": "echo 'No tests yet'",
+		"test:watch": "vitest",
+		"clean": "rm -rf dist"
+	},
+	"keywords": [
+		"i18n",
+		"vue",
+		"internationalization",
+		"typescript"
+	],
+	"author": "Errong Leng <errong.leng@gmail.com>",
+	"license": "MIT",
+	"peerDependencies": {
+		"@qzl/typed-i18n": "workspace:*",
+		"vue": "^3.0.0"
+	},
+	"devDependencies": {
+		"@vue/test-utils": "^2.4.0",
+		"tsup": "^8.5.1",
+		"typescript": "^5.0.0",
+		"vitest": "^4.0.14",
+		"vue": "^3.3.0"
+	}
+}

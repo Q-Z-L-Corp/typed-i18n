@@ -1,28 +1,25 @@
 {
-	"name": "@qzl/typed-i18n",
-	"version": "0.1.0",
-	"description": "Type-safe, multi-file, zero-deps i18n utilities for TypeScript projects.",
-	"main": "dist/index.cjs.js",
-	"module": "dist/index.esm.js",
-	"types": "dist/index.d.ts",
-	"files": [
-		"dist"
-	],
+	"name": "@qzl/typed-i18n-monorepo",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Type-safe i18n library with framework integrations",
 	"scripts": {
 		"prepare": "husky",
-		"build": "tsup",
-		"test": "vitest",
+		"build": "pnpm -r build",
+		"test": "pnpm -r test",
 		"lint": "biome check",
-		"format": "biome format --write"
+		"format": "biome format --write",
+		"clean": "pnpm -r clean"
 	},
 	"keywords": [
 		"i18n",
 		"typescript",
-		"typed",
-		"locales",
-		"qzl"
+		"internationalization",
+		"type-safe",
+		"react",
+		"vue"
 	],
-	"author": "Errong Leng",
+	"author": "Errong Leng <errong.leng@gmail.com>",
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "2.2.0",
