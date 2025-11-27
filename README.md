@@ -4,7 +4,7 @@ A zero-dependency, TypeScript-first library for typed, multi-file translations. 
  
 ## Features
 
-- Multi-file per language structure supported via `defineTranslation`/`defineTranslations`.
+- Multi-file per language structure supported via `defineResource`/`defineTranslations`.
 - Compile-time shape validation: languages must share identical translation object shape.
 - Typed `t(locale, key, params?)` with autocomplete for translation keys.
 - Zero runtime dependencies.
@@ -12,13 +12,13 @@ A zero-dependency, TypeScript-first library for typed, multi-file translations. 
 ## Quick start (example)
 
 ```ts
-import { defineTranslation, defineTranslations, createI18n } from '@qzl/typed-i18n';
+import { defineResource, defineTranslations, createI18n } from '@qzl/typed-i18n';
 import en from './locales/en/common.json';
 import fr from './locales/fr/common.json';
 
 const tr = defineTranslations(
-defineTranslation('en', en),
-defineTranslation('fr', fr)
+    defineResource('en', en),
+    defineResource('fr', fr)
 );
 
 const i18n = createI18n(tr);
