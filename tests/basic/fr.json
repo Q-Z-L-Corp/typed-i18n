@@ -1,0 +1,7 @@
+{
+	"common": { "ok": "D'accord", "cancel": "Annuler" },
+	"dashboard": {
+		"title": "Tableau de bord",
+		"stats": { "clicks": "{{count}} clics" }
+	}
+}

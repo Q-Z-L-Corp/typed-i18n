@@ -1,0 +1,12 @@
+{
+	"common": {
+		"cancel": "Cancel",
+		"ok": "OK"
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"stats": {
+			"clicks": "{{count}} clicks"
+		}
+	}
+}

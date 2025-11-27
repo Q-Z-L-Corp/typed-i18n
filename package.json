@@ -1,0 +1,41 @@
+{
+	"name": "@qzl/typed-i18n",
+	"version": "0.1.0",
+	"description": "Type-safe, multi-file, zero-deps i18n utilities for TypeScript projects.",
+	"main": "dist/index.cjs.js",
+	"module": "dist/index.esm.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"prepare": "husky",
+		"build": "tsc",
+		"test": "vitest",
+		"lint": "biome check",
+		"format": "biome format --write"
+	},
+	"keywords": [
+		"i18n",
+		"typescript",
+		"typed",
+		"locales",
+		"qzl"
+	],
+	"author": "Errong Leng",
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "2.2.0",
+		"@types/node": "^20.0.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.2.3",
+		"tsup": "^8.5.1",
+		"typescript": "^5.0.0",
+		"vitest": "^4.0.14"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,json,css,md,yml,yaml}": [
+			"biome format --write"
+		]
+	}
+}
