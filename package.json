@@ -12,7 +12,10 @@
 		"clean": "pnpm -r clean",
 		"version:core": "cd packages/core && pnpm version",
 		"version:react": "cd packages/react && pnpm version",
-		"version:vue": "cd packages/vue && pnpm version"
+		"version:vue": "cd packages/vue && pnpm version",
+		"demo:react": "pnpm --filter typed-i18n-react-demo dev",
+		"demo:react:build": "pnpm --filter typed-i18n-react-demo build",
+		"demo:react:preview": "pnpm --filter typed-i18n-react-demo preview"
 	},
 	"keywords": [
 		"i18n",

@@ -1,0 +1,31 @@
+{
+	"app": {
+		"title": "类型化国际化测试应用",
+		"subtitle": "测试 @qzl/typed-i18n-react 包"
+	},
+	"greeting": {
+		"hello": "你好",
+		"welcome": "欢迎，{{name}}！",
+		"welcomeBack": "欢迎回来，{{name}}！你有 {{count}} 条新消息。"
+	},
+	"actions": {
+		"switchLanguage": "切换语言",
+		"incrementCounter": "增加计数器",
+		"reset": "重置"
+	},
+	"counter": {
+		"label": "计数器",
+		"value": "当前计数：{{count}}",
+		"clicks": "你点击了 {{count}} 次",
+		"clicks_plural": "你点击了 {{count}} 次"
+	},
+	"features": {
+		"title": "测试功能",
+		"basicTranslation": "基础翻译",
+		"interpolation": "字符串插值",
+		"pluralization": "复数化",
+		"localeSwitch": "语言切换",
+		"typeSupport": "完整的 TypeScript 支持"
+	},
+	"description": "这是一个用于测试 typed-i18n React 包的应用程序。它展示了具有完整 IDE 自动补全支持的类型安全国际化。"
+}

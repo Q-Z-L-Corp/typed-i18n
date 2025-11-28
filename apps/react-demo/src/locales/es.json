@@ -1,0 +1,31 @@
+{
+	"app": {
+		"title": "Aplicación de Prueba i18n Tipada",
+		"subtitle": "Probando el paquete @qzl/typed-i18n-react"
+	},
+	"greeting": {
+		"hello": "Hola",
+		"welcome": "¡Bienvenido, {{name}}!",
+		"welcomeBack": "¡Bienvenido de nuevo, {{name}}! Tienes {{count}} mensajes nuevos."
+	},
+	"actions": {
+		"switchLanguage": "Cambiar Idioma",
+		"incrementCounter": "Incrementar Contador",
+		"reset": "Restablecer"
+	},
+	"counter": {
+		"label": "Contador",
+		"value": "Conteo actual: {{count}}",
+		"clicks": "Hiciste clic {{count}} vez",
+		"clicks_plural": "Hiciste clic {{count}} veces"
+	},
+	"features": {
+		"title": "Funciones Probadas",
+		"basicTranslation": "Traducción Básica",
+		"interpolation": "Interpolación de Cadenas",
+		"pluralization": "Pluralización",
+		"localeSwitch": "Cambio de Idioma",
+		"typeSupport": "Soporte Completo de TypeScript"
+	},
+	"description": "Esta es una aplicación de prueba para el paquete React de typed-i18n. Demuestra la internacionalización segura de tipos con soporte completo de autocompletado del IDE."
+}

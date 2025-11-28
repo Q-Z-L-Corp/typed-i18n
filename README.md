@@ -10,6 +10,10 @@ This is a monorepo containing multiple packages:
 - **[@qzl/typed-i18n-react](./packages/react)** - React bindings with hooks
 - **[@qzl/typed-i18n-vue](./packages/vue)** - Vue 3 bindings with composables
 
+## Demo Apps
+
+- **[React Demo](./apps/react-demo)** - Full React demo showcasing all features
+
 ## Features
 
 ✅ **100% Type-Safe** - Compile-time validation of all translation keys  

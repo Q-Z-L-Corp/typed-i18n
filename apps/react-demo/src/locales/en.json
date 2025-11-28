@@ -1,0 +1,31 @@
+{
+	"app": {
+		"title": "Typed i18n Test App",
+		"subtitle": "Testing @qzl/typed-i18n-react package"
+	},
+	"greeting": {
+		"hello": "Hello",
+		"welcome": "Welcome, {{name}}!",
+		"welcomeBack": "Welcome back, {{name}}! You have {{count}} new messages."
+	},
+	"actions": {
+		"switchLanguage": "Switch Language",
+		"incrementCounter": "Increment Counter",
+		"reset": "Reset"
+	},
+	"counter": {
+		"label": "Counter",
+		"value": "Current count: {{count}}",
+		"clicks": "You clicked {{count}} time",
+		"clicks_plural": "You clicked {{count}} times"
+	},
+	"features": {
+		"title": "Features Tested",
+		"basicTranslation": "Basic Translation",
+		"interpolation": "String Interpolation",
+		"pluralization": "Pluralization",
+		"localeSwitch": "Locale Switching",
+		"typeSupport": "Full TypeScript Support"
+	},
+	"description": "This is a test application for the typed-i18n React package. It demonstrates type-safe internationalization with full IDE autocomplete support."
+}
