@@ -2,6 +2,10 @@
 
 React bindings for `@qzl/typed-i18n` with full TypeScript support.
 
+## Live Demo
+
+🚀 **[View Live Demo](https://typed-i18n.vercel.app/)** - See dynamic module loading, locale switching, and type-safe translations in action.
+
 ## Installation
 
 ```bash

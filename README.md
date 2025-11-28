@@ -2,6 +2,10 @@
 
 Type-safe internationalization library with zero dependencies and framework integrations.
 
+## Live Demo
+
+🚀 **[View React Demo](https://typed-i18n.vercel.app/)** - Interactive demo showcasing dynamic module loading, locale switching, and type-safe translations.
+
 ## Packages
 
 This is a monorepo containing multiple packages:
