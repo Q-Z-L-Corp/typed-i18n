@@ -1,6 +1,6 @@
 {
-	"installCommand": "pnpm install",
-	"buildCommand": "pnpm build && pnpm --filter typed-i18n-react-demo build",
+	"installCommand": "corepack pnpm install",
+	"buildCommand": "corepack pnpm build && corepack pnpm --filter typed-i18n-react-demo build",
 	"outputDirectory": "apps/react-demo/dist",
 	"framework": "vite",
 	"rewrites": [
