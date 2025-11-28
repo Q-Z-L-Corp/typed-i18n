@@ -17,7 +17,7 @@
 	],
 	"scripts": {
 		"build": "tsup src/index.tsx --format cjs,esm --dts --external react",
-		"test": "echo 'No tests yet'",
+		"test": "vitest run",
 		"test:watch": "vitest",
 		"clean": "rm -rf dist"
 	},
@@ -31,13 +31,18 @@
 	"author": "Errong Leng <errong.leng@gmail.com>",
 	"license": "MIT",
 	"peerDependencies": {
-		"@qzl/typed-i18n": "workspace:*",
-		"react": "^18.0.0"
+		"@qzl/typed-i18n": "workspace:*"
 	},
 	"devDependencies": {
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^14.3.1",
+		"@testing-library/react-hooks": "^8.0.1",
 		"@types/react": "^18.2.0",
-		"@testing-library/react": "^14.0.0",
-		"react": "^18.2.0",
+		"@vitejs/plugin-react": "^5.1.1",
+		"happy-dom": "^20.0.11",
+		"jsdom": "^27.2.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"tsup": "^8.5.1",
 		"typescript": "^5.0.0",
 		"vitest": "^4.0.14"
