@@ -10,12 +10,15 @@ const app = defineModule("app")<typeof en>({
 	es,
 });
 
+const modules = { app };
+
 // Create i18n instance with the app module
 export const i18n = createI18n({
 	locale: "en",
 	fallbackLocale: "en",
-	modules: { app },
+	modules,
 });
 
+export type I18nModules = typeof modules;
 export type I18n = typeof i18n;
 export type Locale = "en" | "zh" | "es";

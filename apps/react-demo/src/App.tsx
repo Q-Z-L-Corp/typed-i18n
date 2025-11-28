@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useTranslation, useLocale } from "@qzl/typed-i18n-react";
-import type { Locale } from "./i18n";
+import type { I18nModules, Locale } from "./i18n";
 import "./App.css";
 
 function App() {
 	const [count, setCount] = useState(0);
-	const { t } = useTranslation();
+	const { t } = useTranslation<I18nModules>();
 	const { locale, setLocale } = useLocale();
 
 	const locales: Locale[] = ["en", "zh", "es"];
