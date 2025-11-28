@@ -10,6 +10,46 @@ pnpm add @qzl/typed-i18n @qzl/typed-i18n-react
 
 ## Usage
 
+### Important: Preserve Key Type Safety
+
+To get static type errors for incorrect translation keys you MUST pass your module type (or use a pre-bound wrapper hook). Without the generic, `t()` falls back to a loose pattern like ```${string}.${string}``` and invalid keys will not error at compile time.
+
+```tsx
+// i18n.ts
+const app = defineModule('app')<typeof enApp>({ en: enApp, fr: frApp });
+export const i18n = createI18n({ locale: 'en', fallbackLocale: 'en', modules: { app } });
+export type I18nModules = { app: typeof app };
+
+// Component: GOOD (strict key union)
+const { t } = useTranslation<I18nModules>();
+t('app.title');           // OK
+t('app.missing');         // ❌ Type error at compile time
+
+// Component: WEAK (no generic) – do NOT use this form if you want key checking
+const { t: tLoose } = useTranslation();
+tLoose('app.missing');    // ✅ Compiles (no static safety)
+```
+
+Recommended ergonomic wrapper so you never forget the generic:
+
+```tsx
+// i18n-hooks.ts
+export const useAppTranslation = () => useTranslation<I18nModules>();
+export const useAppLocale = () => useLocale<I18nModules>();
+export const useAppI18n = () => useI18n<I18nModules>();
+
+// Component
+const { t } = useAppTranslation();
+```
+
+If you later add modules dynamically, you can widen the type:
+```tsx
+const dashboard = defineModule('dashboard')<typeof enDashboard>({ en: enDashboard });
+const updated = useAppI18n().addModule(dashboard);
+// For immediate strict typing in this scope:
+const { t: tWithDashboard } = useTranslation<I18nModules & { dashboard: typeof dashboard }>();
+```
+
 ### Setup Provider
 
 ```tsx
@@ -78,8 +118,10 @@ Provider component that makes i18n instance available to all child components.
 Returns translation function and current locale.
 
 **Returns:**
-- `t(key, params?)` - Translate function (fully typed)
+- `t(key, params?)` - Translate function (fully typed when generic provided)
 - `locale` - Current active locale
+
+⚠️ Pass your module type generic (e.g. `useTranslation<I18nModules>()`) for strict key unions.
 
 ### `useLocale()`
 

@@ -10,6 +10,31 @@ pnpm add @qzl/typed-i18n @qzl/typed-i18n-vue
 
 ## Usage
 
+### Important: Key Type Safety
+
+Translation key type safety depends on providing the reference type when defining a module:
+
+```ts
+const common = defineModule('common')<typeof enCommon>({
+  en: enCommon,
+  fr: frCommon,
+}); // ✅ Keys validated at compile time
+```
+
+If you omit the generic reference type, Vue runtime still works but invalid keys won’t be caught until runtime warnings appear.
+
+Dynamic module loading: `addModule()` returns a new widened instance. To get types for newly added namespaces in the same scope, use the returned instance.
+
+```ts
+const i18n = createI18n({ locale: 'en', modules: { common } });
+const dashboard = defineModule('dashboard')<typeof enDashboard>({ en: enDashboard, fr: frDashboard });
+const i18n2 = i18n.addModule(dashboard); // widened type
+i18n2.t('dashboard.title'); // ✅ Typed
+i18n.t('dashboard.title');  // ❌ Type error (original instance)
+```
+
+When using the plugin, if you need types for dynamically added modules in existing components, re-provide the updated instance or design your app to mount features after load.
+
 ### Plugin API (Recommended)
 
 ```typescript
@@ -44,6 +69,10 @@ app.mount('#app');
 import { useI18n } from '@qzl/typed-i18n-vue';
 
 const { t, locale, setLocale, locales } = useI18n();
+
+// You can optionally narrow to a namespace for stricter key scope:
+// const { t } = useI18n();
+// const tCommon = ((key: `common.${string}`) => t(key))
 </script>
 
 <template>

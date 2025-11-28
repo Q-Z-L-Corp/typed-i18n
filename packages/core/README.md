@@ -276,16 +276,34 @@ This helps catch structure mismatches even when compile-time checks are bypassed
 
 ## React Integration
 
-Coming soon! The module-based architecture is designed to work seamlessly with React:
+Use `@qzl/typed-i18n-react` for first-class React bindings:
 
 ```tsx
-// Future React API
+// i18n.ts
+const common = defineModule('common')<typeof enCommon>({ en: enCommon, fr: frCommon });
+export const i18n = createI18n({ locale: 'en', fallbackLocale: 'en', modules: { common } });
+export type I18nModules = { common: typeof common };
+
+// App root
 <I18nProvider i18n={i18n}>
   <App />
 </I18nProvider>
 
-const { t } = useTranslation();
-t('common.hello');
+// Component with strict key checking
+const { t } = useTranslation<I18nModules>();
+t('common.hello');      // ✅
+t('common.oops');       // ❌ compile-time error
+
+// Without generic (not recommended): keys become loose `${string}.${string}`
+const { t: tLoose } = useTranslation();
+tLoose('common.oops');  // ✅ compiles (no static safety)
+```
+
+Dynamic module loading returns a widened instance you should propagate via context/state for updated key unions:
+
+```tsx
+const settings = defineModule('settings')<typeof enSettings>({ en: enSettings, fr: frSettings });
+const i18n2 = i18n.addModule(settings); // new instance with settings.* keys typed
 ```
 
 ## License
