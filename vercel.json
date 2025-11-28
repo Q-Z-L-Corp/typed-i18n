@@ -1,7 +1,7 @@
 {
 	"buildCommand": "cd ../.. && pnpm install --frozen-lockfile && pnpm build && cd apps/react-demo && pnpm build",
 	"outputDirectory": "apps/react-demo/dist",
-	"installCommand": "pnpm install --frozen-lockfile",
+	"installCommand": "pnpm install",
 	"framework": "vite",
 	"rewrites": [
 		{
