@@ -1,0 +1,8 @@
+{
+	"title": "仪表盘概览",
+	"metrics": {
+		"visitors": "今日 {{count}} 位访客",
+		"sales": "销售额 ${{amount}}"
+	},
+	"cta": "查看分析"
+}

@@ -1,0 +1,8 @@
+{
+	"title": "Profile Summary",
+	"greeting": "Welcome back, {{name}}",
+	"status": {
+		"plan": "Current plan: {{plan}}"
+	},
+	"cta": "Edit profile"
+}

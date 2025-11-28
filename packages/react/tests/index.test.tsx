@@ -296,6 +296,43 @@ describe("Dynamic module loading", () => {
 		// (though TypeScript won't know about it without using the returned instance)
 		expect(result.current.t("dashboard.title" as any)).toBe("Dashboard");
 	});
+
+	it("registers modules via useTranslation without duplicate loads", () => {
+		const common = defineModule("common")<typeof commonEn>({
+			en: commonEn,
+			fr: commonFr,
+		});
+
+		const dashboard = defineModule("dashboard")<typeof dashboardEn>({
+			en: dashboardEn,
+			fr: dashboardFr,
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { common },
+		});
+
+		const addModuleSpy = vi.spyOn(i18n, "addModule");
+
+		const wrapper = ({ children }: { children: React.ReactNode }) => (
+			<I18nProvider i18n={i18n}>{children}</I18nProvider>
+		);
+
+		const { result, rerender } = renderHook(
+			() =>
+				useTranslation<{ common: typeof common }, { dashboard: typeof dashboard }>({
+					dashboard,
+				}),
+			{ wrapper },
+		);
+
+		expect(addModuleSpy).toHaveBeenCalledTimes(1);
+		expect(result.current.t("dashboard.title")).toBe("Dashboard");
+
+		rerender();
+		expect(addModuleSpy).toHaveBeenCalledTimes(1);
+	});
 });
 
 describe("Component integration", () => {

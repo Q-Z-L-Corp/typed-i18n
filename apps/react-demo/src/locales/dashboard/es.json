@@ -1,0 +1,8 @@
+{
+	"title": "Resumen del panel",
+	"metrics": {
+		"visitors": "{{count}} visitantes hoy",
+		"sales": "${{amount}} en ventas"
+	},
+	"cta": "Ver analíticas"
+}

@@ -1,7 +1,77 @@
 import { useState } from "react";
 import { useTranslation, useLocale } from "@qzl/typed-i18n-react";
 import type { I18nModules, Locale } from "./i18n";
+import { dashboardModule } from "./modules/dashboard";
+import { profileModule } from "./modules/profile";
 import "./App.css";
+
+function DashboardPanel() {
+	const { t } = useTranslation<I18nModules, { dashboard: typeof dashboardModule }>({
+		dashboard: dashboardModule,
+	});
+
+	return (
+		<div
+			style={{
+				padding: "1.5rem",
+				background: "#ffffff",
+				border: "1px solid #e0e0e0",
+				borderRadius: "8px",
+			}}
+		>
+			<h3 style={{ marginTop: 0 }}>{t("dashboard.title")}</h3>
+			<p>{t("dashboard.metrics.visitors", { count: 1280 })}</p>
+			<p>{t("dashboard.metrics.sales", { amount: 3920 })}</p>
+			<button
+				style={{
+					marginTop: "0.75rem",
+					padding: "0.5rem 1.25rem",
+					backgroundColor: "#646cff",
+					color: "white",
+					border: "none",
+					borderRadius: "4px",
+					cursor: "pointer",
+				}}
+			>
+				{t("dashboard.cta")}
+			</button>
+		</div>
+	);
+}
+
+function ProfilePanel() {
+	const { t } = useTranslation<I18nModules, { profile: typeof profileModule }>({
+		profile: profileModule,
+	});
+
+	return (
+		<div
+			style={{
+				padding: "1.5rem",
+				background: "#ffffff",
+				border: "1px solid #e0e0e0",
+				borderRadius: "8px",
+			}}
+		>
+			<h3 style={{ marginTop: 0 }}>{t("profile.title")}</h3>
+			<p>{t("profile.greeting", { name: "Casey" })}</p>
+			<p>{t("profile.status.plan", { plan: "Pro" })}</p>
+			<button
+				style={{
+					marginTop: "0.75rem",
+					padding: "0.5rem 1.25rem",
+					backgroundColor: "#0f766e",
+					color: "white",
+					border: "none",
+					borderRadius: "4px",
+					cursor: "pointer",
+				}}
+			>
+				{t("profile.cta")}
+			</button>
+		</div>
+	);
+}
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -65,6 +135,19 @@ function App() {
 					<li>✅ {t("app.features.localeSwitch")}</li>
 					<li>✅ {t("app.features.typeSupport")}</li>
 				</ul>
+			</div>
+
+			{/* Dynamic Module Examples */}
+			<div
+				style={{
+					display: "grid",
+					gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+					gap: "1rem",
+					marginBottom: "2rem",
+				}}
+			>
+				<DashboardPanel />
+				<ProfilePanel />
 			</div>
 
 			{/* Greeting Examples */}
@@ -142,6 +225,13 @@ function App() {
 				}}
 			>
 				<p style={{ margin: 0, lineHeight: "1.6" }}>{t("app.description")}</p>
+				<p style={{ margin: "0.5rem 0 0", color: "#555" }}>
+					Dynamic sections above load their own namespaces via
+					<code style={{ margin: "0 0.25rem", fontSize: "0.9em" }}>
+						useTranslation(&#123; modules &#125;)
+					</code>
+					so common and page-level translations stay split.
+				</p>
 			</div>
 
 			{/* Debug Info */}

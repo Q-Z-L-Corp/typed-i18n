@@ -50,6 +50,25 @@ const updated = useAppI18n().addModule(dashboard);
 const { t: tWithDashboard } = useTranslation<I18nModules & { dashboard: typeof dashboard }>();
 ```
 
+### Dynamic Modules (Page-Level Splitting)
+
+Load only the namespaces a feature needs by passing a modules object to `useTranslation`. Each module is registered once and cached by namespace, so repeated renders stay cheap.
+
+```tsx
+import { dashboardModule } from "./modules/dashboard";
+
+const { t } = useTranslation<
+  I18nModules,
+  { dashboard: typeof dashboardModule }
+>({
+  dashboard: dashboardModule,
+});
+
+console.log(t("dashboard.title"));
+```
+
+Keep the modules object stable (imported or memoized) to avoid unnecessary effect churn. After the hook registers a module, the provider widens the shared i18n instance so other components can access the new namespace without reloading it.
+
 ### Setup Provider
 
 ```tsx
@@ -122,6 +141,8 @@ Returns translation function and current locale.
 - `locale` - Current active locale
 
 ⚠️ Pass your module type generic (e.g. `useTranslation<I18nModules>()`) for strict key unions.
+
+**Optional argument:** `useTranslation<I18nModules, ExtraModules>({ ...ExtraModules })` dynamically registers more namespaces (e.g. page-level modules) and widens `t` to cover them.
 
 ### `useLocale()`
 

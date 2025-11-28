@@ -1,0 +1,8 @@
+{
+	"title": "个人概览",
+	"greeting": "欢迎回来，{{name}}",
+	"status": {
+		"plan": "当前方案：{{plan}}"
+	},
+	"cta": "编辑资料"
+}
