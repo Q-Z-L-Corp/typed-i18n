@@ -3,13 +3,7 @@
 // -------------------------
 export type Language = string;
 
-export type JSONValue =
-	| string
-	| number
-	| boolean
-	| null
-	| JSONObject
-	| JSONArray;
+export type JSONValue = string | number | boolean | null | JSONObject | JSONArray;
 
 export interface JSONObject {
 	[key: string]: JSONValue;
@@ -54,13 +48,9 @@ export interface I18nModule<
  * If the reference type is not provided and locale structures don't match,
  * a detailed runtime warning will be logged to the console showing the differences.
  */
-export function defineModule<const Namespace extends string>(
-	namespace: Namespace,
-) {
+export function defineModule<const Namespace extends string>(namespace: Namespace) {
 	return <Reference extends JSONObject>(
-		translations: Reference extends JSONObject
-			? Record<string, Reference>
-			: never,
+		translations: Reference extends JSONObject ? Record<string, Reference> : never,
 	): I18nModule<Namespace, Reference> => {
 		// Runtime validation to warn when reference type is not explicitly provided
 		// This helps catch structure mismatches at runtime when compile-time checks are bypassed
@@ -84,9 +74,7 @@ export function defineModule<const Namespace extends string>(
 						!Array.isArray(obj2[key])
 					) {
 						// Recursively check nested objects
-						errors.push(
-							...compareStructure(obj1[key], obj2[key], `${path}${key}.`),
-						);
+						errors.push(...compareStructure(obj1[key], obj2[key], `${path}${key}.`));
 					}
 				}
 
@@ -155,10 +143,7 @@ export type Params = Record<string, string | number | boolean>;
  * E.g., 'common.hello' | 'common.goodbye' | 'dashboard.title'
  */
 export type ModuleKeys<TModules extends Record<string, I18nModule>> = {
-	[K in keyof TModules]: TModules[K] extends I18nModule<
-		infer NS,
-		infer Reference
-	>
+	[K in keyof TModules]: TModules[K] extends I18nModule<infer NS, infer Reference>
 		? `${NS & string}.${Paths<Reference>}`
 		: never;
 }[keyof TModules];

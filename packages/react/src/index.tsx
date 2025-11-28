@@ -1,11 +1,4 @@
-import {
-	createContext,
-	useContext,
-	useState,
-	useCallback,
-	useMemo,
-	type ReactNode,
-} from "react";
+import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react";
 import type {
 	I18nInstance,
 	I18nModule,
@@ -37,9 +30,7 @@ export function I18nProvider<TModules extends Record<string, I18nModule>>({
 	i18n,
 	children,
 }: I18nProviderProps<TModules>) {
-	const [locale, setLocaleState] = useState<LocalesFromModules<TModules>>(
-		i18n.getLocale(),
-	);
+	const [locale, setLocaleState] = useState<LocalesFromModules<TModules>>(i18n.getLocale());
 
 	const setLocale = useCallback(
 		(newLocale: LocalesFromModules<TModules>) => {
@@ -49,10 +40,7 @@ export function I18nProvider<TModules extends Record<string, I18nModule>>({
 		[i18n],
 	);
 
-	const value = useMemo(
-		() => ({ i18n, locale, setLocale }),
-		[i18n, locale, setLocale],
-	);
+	const value = useMemo(() => ({ i18n, locale, setLocale }), [i18n, locale, setLocale]);
 
 	return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
@@ -60,9 +48,7 @@ export function I18nProvider<TModules extends Record<string, I18nModule>>({
 // -------------------------
 // useTranslation Hook
 // -------------------------
-export interface UseTranslationResult<
-	TModules extends Record<string, I18nModule>,
-> {
+export interface UseTranslationResult<TModules extends Record<string, I18nModule>> {
 	t: (key: ModuleKeys<TModules>, params?: Params) => string;
 	locale: LocalesFromModules<TModules>;
 }

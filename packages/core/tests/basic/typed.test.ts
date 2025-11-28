@@ -19,16 +19,12 @@ describe("typed-i18n modern API", () => {
 		});
 
 		expect(i18n.t("common.common.ok")).toBe("OK");
-		expect(i18n.t("common.dashboard.stats.clicks", { count: 3 })).toBe(
-			"3 clicks",
-		);
+		expect(i18n.t("common.dashboard.stats.clicks", { count: 3 })).toBe("3 clicks");
 
 		// Change locale
 		i18n.setLocale("fr");
 		expect(i18n.t("common.common.ok")).toBe("D'accord");
-		expect(i18n.t("common.dashboard.stats.clicks", { count: 3 })).toBe(
-			"3 clics",
-		);
+		expect(i18n.t("common.dashboard.stats.clicks", { count: 3 })).toBe("3 clics");
 	});
 
 	it("supports fallback locale", () => {
@@ -53,12 +49,10 @@ describe("typed-i18n modern API", () => {
 			fr,
 		});
 
-		const settings = defineModule("settings")<{ title: string; theme: string }>(
-			{
-				en: { title: "Settings", theme: "Theme" },
-				fr: { title: "Paramètres", theme: "Thème" },
-			},
-		);
+		const settings = defineModule("settings")<{ title: string; theme: string }>({
+			en: { title: "Settings", theme: "Theme" },
+			fr: { title: "Paramètres", theme: "Thème" },
+		});
 
 		// Define all modules upfront for full type safety
 		const i18n = createI18n({
@@ -127,9 +121,7 @@ describe("typed-i18n modern API", () => {
 		});
 
 		// Should have warned
-		expect(warnSpy).toHaveBeenCalledWith(
-			expect.stringContaining("structural differences"),
-		);
+		expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("structural differences"));
 
 		warnSpy.mockRestore();
 	});

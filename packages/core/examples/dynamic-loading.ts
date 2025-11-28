@@ -77,6 +77,4 @@ console.log(i18nFull.t("dashboard.title")); // "Tableau de bord"
 console.log(i18nFull.t("common.hello")); // "Bonjour"
 
 console.log("\n✅ All modules fully typed!");
-console.log(
-	"💡 Tip: Use new variables for each addModule() to preserve type safety",
-);
+console.log("💡 Tip: Use new variables for each addModule() to preserve type safety");

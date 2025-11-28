@@ -1,11 +1,4 @@
-import {
-	inject,
-	provide,
-	reactive,
-	computed,
-	type InjectionKey,
-	type App,
-} from "vue";
+import { inject, provide, reactive, computed, type InjectionKey, type App } from "vue";
 import type {
 	I18nInstance,
 	I18nModule,
@@ -27,9 +20,7 @@ interface I18nState<TModules extends Record<string, I18nModule>> {
 // -------------------------
 // Plugin
 // -------------------------
-export interface I18nPluginOptions<
-	TModules extends Record<string, I18nModule>,
-> {
+export interface I18nPluginOptions<TModules extends Record<string, I18nModule>> {
 	i18n: I18nInstance<TModules>;
 }
 
@@ -46,10 +37,8 @@ export function createI18nPlugin<TModules extends Record<string, I18nModule>>(
 			app.provide(I18nSymbol, state);
 
 			// Global property
-			app.config.globalProperties.$t = (
-				key: ModuleKeys<TModules>,
-				params?: Params,
-			) => state.i18n.t(key, params);
+			app.config.globalProperties.$t = (key: ModuleKeys<TModules>, params?: Params) =>
+				state.i18n.t(key, params);
 		},
 	};
 }
@@ -61,14 +50,11 @@ export function useI18n<TModules extends Record<string, I18nModule>>() {
 	const state = inject(I18nSymbol);
 
 	if (!state) {
-		throw new Error(
-			"useI18n must be used within an app that has the i18n plugin installed",
-		);
+		throw new Error("useI18n must be used within an app that has the i18n plugin installed");
 	}
 
 	return {
-		t: (key: ModuleKeys<TModules>, params?: Params) =>
-			state.i18n.t(key, params),
+		t: (key: ModuleKeys<TModules>, params?: Params) => state.i18n.t(key, params),
 		locale: computed(() => state.locale),
 		setLocale: (locale: LocalesFromModules<TModules>) => {
 			state.i18n.setLocale(locale);

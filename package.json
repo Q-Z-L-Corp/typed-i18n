@@ -31,21 +31,8 @@
 		"vitest": "^4.0.14"
 	},
 	"lint-staged": {
-		"*.{js,jsx,ts,tsx,json,css,yml,yaml}": [
+		"*.{js,jsx,ts,tsx,json}": [
 			"biome format --write"
 		]
-	},
-	"tsup": {
-		"entry": [
-			"src/index.ts"
-		],
-		"dts": true,
-		"format": [
-			"cjs",
-			"esm"
-		],
-		"outDir": "dist",
-		"splitting": true,
-		"clean": true
 	}
 }

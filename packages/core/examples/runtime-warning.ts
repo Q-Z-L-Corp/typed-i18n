@@ -7,9 +7,7 @@
 
 import { defineModule } from "../src";
 
-console.log(
-	"=== Example: Missing reference type with mismatched structures ===\n",
-);
+console.log("=== Example: Missing reference type with mismatched structures ===\n");
 
 // ❌ WRONG - No reference type provided, structures don't match
 const mismatched = defineModule("example")({
@@ -31,6 +29,4 @@ const mismatched = defineModule("example")({
 });
 
 console.log("\n✅ To fix this, provide an explicit reference type:");
-console.log(
-	"const example = defineModule('example')<typeof enJson>({ en: enJson, fr: frJson });",
-);
+console.log("const example = defineModule('example')<typeof enJson>({ en: enJson, fr: frJson });");
