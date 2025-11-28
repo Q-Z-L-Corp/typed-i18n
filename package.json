@@ -15,7 +15,8 @@
 		"version:vue": "cd packages/vue && pnpm version",
 		"demo:react": "pnpm --filter typed-i18n-react-demo dev",
 		"demo:react:build": "pnpm --filter typed-i18n-react-demo build",
-		"demo:react:preview": "pnpm --filter typed-i18n-react-demo preview"
+		"demo:react:preview": "pnpm --filter typed-i18n-react-demo preview",
+		"vercel-build": "pnpm build && pnpm demo:react:build"
 	},
 	"keywords": [
 		"i18n",
