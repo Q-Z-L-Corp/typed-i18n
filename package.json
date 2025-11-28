@@ -41,5 +41,6 @@
 		"*.{js,jsx,ts,tsx,json}": [
 			"biome format --write"
 		]
-	}
+	},
+	"packageManager": "pnpm@10.14.0"
 }
