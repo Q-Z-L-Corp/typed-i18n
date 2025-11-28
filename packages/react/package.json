@@ -16,7 +16,7 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "tsup src/index.tsx --format cjs,esm --dts --external react",
+		"build": "tsup src/index.tsx --format cjs,esm --dts --external react --external react-dom",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"clean": "rm -rf dist"
