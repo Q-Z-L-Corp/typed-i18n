@@ -94,9 +94,9 @@ pnpm install --frozen-lockfile
 
 ## What Gets Built
 
-1. Core package (`@qzl/typed-i18n`)
-2. React package (`@qzl/typed-i18n-react`)
-3. Vue package (`@qzl/typed-i18n-vue`)
+1. Core package (`@qzlcorp/typed-i18n`)
+2. React package (`@qzlcorp/typed-i18n-react`)
+3. Vue package (`@qzlcorp/typed-i18n-vue`)
 4. React demo app (output to `apps/react-demo/dist`)
 
 Only the demo app's `dist` folder is deployed to Vercel.

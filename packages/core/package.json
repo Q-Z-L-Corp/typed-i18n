@@ -1,5 +1,5 @@
 {
-	"name": "@qzl/typed-i18n",
+	"name": "@qzlcorp/typed-i18n",
 	"version": "1.0.0",
 	"description": "Type-safe i18n library with zero dependencies",
 	"main": "./dist/index.js",

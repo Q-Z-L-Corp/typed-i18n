@@ -1,7 +1,7 @@
 {
 	"app": {
 		"title": "Typed i18n Test App",
-		"subtitle": "Testing @qzl/typed-i18n-react package"
+		"subtitle": "Testing @qzlcorp/typed-i18n-react package"
 	},
 	"greeting": {
 		"hello": "Hello",

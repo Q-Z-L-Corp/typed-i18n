@@ -53,9 +53,9 @@ git push
 3. Select **Publish** workflow from the left sidebar
 4. Click **Run workflow** button
 5. Select which package to publish:
-   - `core` - Publish @qzl/typed-i18n only
-   - `react` - Publish @qzl/typed-i18n-react only
-   - `vue` - Publish @qzl/typed-i18n-vue only
+   - `core` - Publish @qzlcorp/typed-i18n only
+   - `react` - Publish @qzlcorp/typed-i18n-react only
+   - `vue` - Publish @qzlcorp/typed-i18n-vue only
    - `all` - Publish all three packages
 
 The workflow will:
@@ -108,11 +108,11 @@ pnpm version:core major  # 1.0.0 → 2.0.0
 # 2. Update peerDependencies in React and Vue
 # Edit packages/react/package.json:
 #   "peerDependencies": {
-#     "@qzl/typed-i18n": "^2.0.0"  // Change from ^1.0.0
+#     "@qzlcorp/typed-i18n": "^2.0.0"  // Change from ^1.0.0
 #   }
 # Edit packages/vue/package.json:
 #   "peerDependencies": {
-#     "@qzl/typed-i18n": "^2.0.0"  // Change from ^1.0.0
+#     "@qzlcorp/typed-i18n": "^2.0.0"  // Change from ^1.0.0
 #   }
 
 # 3. Update React and Vue code if needed to work with new core API
@@ -148,10 +148,10 @@ git push
 {
   "version": "1.0.0",
   "peerDependencies": {
-    "@qzl/typed-i18n": "^1.0.0"
+    "@qzlcorp/typed-i18n": "^1.0.0"
   },
   "devDependencies": {
-    "@qzl/typed-i18n": "workspace:*"
+    "@qzlcorp/typed-i18n": "workspace:*"
   }
 }
 ```
@@ -161,11 +161,11 @@ git push
 {
   "version": "1.0.0",
   "peerDependencies": {
-    "@qzl/typed-i18n": "^1.0.0",
+    "@qzlcorp/typed-i18n": "^1.0.0",
     "vue": "^3.0.0"
   },
   "devDependencies": {
-    "@qzl/typed-i18n": "workspace:*"
+    "@qzlcorp/typed-i18n": "workspace:*"
   }
 }
 ```

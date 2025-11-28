@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { I18nProvider } from "@qzl/typed-i18n-react";
+import { I18nProvider } from "@qzlcorp/typed-i18n-react";
 import { i18n } from "./i18n";
 import "./index.css";
 import App from "./App.tsx";

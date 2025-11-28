@@ -14,7 +14,7 @@ import type {
 	ModuleKeys,
 	LocalesFromModules,
 	Params,
-} from "@qzl/typed-i18n";
+} from "@qzlcorp/typed-i18n";
 
 type ModuleRecord = Record<string, I18nModule>;
 type EmptyModules = Record<never, I18nModule>;

@@ -1,7 +1,7 @@
 {
-	"name": "@qzl/typed-i18n-vue",
+	"name": "@qzlcorp/typed-i18n-vue",
 	"version": "1.0.0",
-	"description": "Vue bindings for @qzl/typed-i18n",
+	"description": "Vue bindings for @qzlcorp/typed-i18n",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
@@ -30,11 +30,11 @@
 	"author": "Errong Leng <errong.leng@gmail.com>",
 	"license": "MIT",
 	"peerDependencies": {
-		"@qzl/typed-i18n": "^1.0.0",
+		"@qzlcorp/typed-i18n": "^1.0.0",
 		"vue": "^3.0.0"
 	},
 	"devDependencies": {
-		"@qzl/typed-i18n": "workspace:*",
+		"@qzlcorp/typed-i18n": "workspace:*",
 		"@vitejs/plugin-vue": "^6.0.2",
 		"@vue/test-utils": "^2.4.0",
 		"happy-dom": "^20.0.11",

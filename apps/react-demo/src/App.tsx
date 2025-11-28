@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTranslation, useLocale } from "@qzl/typed-i18n-react";
+import { useTranslation, useLocale } from "@qzlcorp/typed-i18n-react";
 import type { I18nModules, Locale } from "./i18n";
 import { dashboardModule } from "./modules/dashboard";
 import { profileModule } from "./modules/profile";
@@ -247,7 +247,7 @@ function App() {
 			>
 				<strong>Current Locale:</strong> {locale}
 				<br />
-				<strong>Package:</strong> @qzl/typed-i18n-react
+				<strong>Package:</strong> @qzlcorp/typed-i18n-react
 			</div>
 		</div>
 	);

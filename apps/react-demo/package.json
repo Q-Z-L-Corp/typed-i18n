@@ -10,8 +10,8 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@qzl/typed-i18n": "workspace:*",
-		"@qzl/typed-i18n-react": "workspace:*",
+		"@qzlcorp/typed-i18n": "workspace:*",
+		"@qzlcorp/typed-i18n-react": "workspace:*",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0"
 	},

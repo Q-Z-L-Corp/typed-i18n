@@ -1,5 +1,5 @@
 {
-	"name": "@qzl/typed-i18n-monorepo",
+	"name": "@qzlcorp/typed-i18n-monorepo",
 	"version": "1.0.0",
 	"private": true,
 	"description": "Type-safe i18n library with framework integrations",

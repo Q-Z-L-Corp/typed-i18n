@@ -1,4 +1,4 @@
-import { defineModule } from "@qzl/typed-i18n";
+import { defineModule } from "@qzlcorp/typed-i18n";
 import en from "../locales/profile/en.json";
 import zh from "../locales/profile/zh.json";
 import es from "../locales/profile/es.json";

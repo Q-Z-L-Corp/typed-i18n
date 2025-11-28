@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick } from "vue";
-import { defineModule, createI18n } from "@qzl/typed-i18n";
+import { defineModule, createI18n } from "@qzlcorp/typed-i18n";
 import { createI18nPlugin, useI18n, provideI18n, injectI18n } from "../src/index";
 
 // Test translation data

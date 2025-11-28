@@ -1,4 +1,4 @@
-# @qzl/typed-i18n
+# @qzlcorp/typed-i18n
 
 A zero-dependency, TypeScript-first i18n library with module-based organization and compile-time type safety. Inspired by modern i18n libraries, designed for scalability and code-splitting.
  
@@ -15,7 +15,7 @@ A zero-dependency, TypeScript-first i18n library with module-based organization 
 ## Installation
 
 ```bash
-npm install @qzl/typed-i18n
+npm install @qzlcorp/typed-i18n
 ```
 
 ## Quick Start
@@ -39,7 +39,7 @@ npm install @qzl/typed-i18n
 ### 2. Define modules and create i18n instance
 
 ```typescript
-import { defineModule, createI18n } from '@qzl/typed-i18n';
+import { defineModule, createI18n } from '@qzlcorp/typed-i18n';
 import commonEn from './locales/common/en.json';
 import commonFr from './locales/common/fr.json';
 
@@ -276,7 +276,7 @@ This helps catch structure mismatches even when compile-time checks are bypassed
 
 ## React Integration
 
-Use `@qzl/typed-i18n-react` for first-class React bindings:
+Use `@qzlcorp/typed-i18n-react` for first-class React bindings:
 
 ```tsx
 // i18n.ts

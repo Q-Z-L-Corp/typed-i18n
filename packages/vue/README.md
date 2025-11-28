@@ -1,11 +1,11 @@
-# @qzl/typed-i18n-vue
+# @qzlcorp/typed-i18n-vue
 
-Vue 3 bindings for `@qzl/typed-i18n` with full TypeScript support.
+Vue 3 bindings for `@qzlcorp/typed-i18n` with full TypeScript support.
 
 ## Installation
 
 ```bash
-pnpm add @qzl/typed-i18n @qzl/typed-i18n-vue
+pnpm add @qzlcorp/typed-i18n @qzlcorp/typed-i18n-vue
 ```
 
 ## Usage
@@ -39,8 +39,8 @@ When using the plugin, if you need types for dynamically added modules in existi
 
 ```typescript
 import { createApp } from 'vue';
-import { createI18n, defineModule } from '@qzl/typed-i18n';
-import { createI18nPlugin } from '@qzl/typed-i18n-vue';
+import { createI18n, defineModule } from '@qzlcorp/typed-i18n';
+import { createI18nPlugin } from '@qzlcorp/typed-i18n-vue';
 import App from './App.vue';
 
 // Define your modules
@@ -66,7 +66,7 @@ app.mount('#app');
 
 ```vue
 <script setup lang="ts">
-import { useI18n } from '@qzl/typed-i18n-vue';
+import { useI18n } from '@qzlcorp/typed-i18n-vue';
 
 const { t, locale, setLocale, locales } = useI18n();
 
@@ -106,7 +106,7 @@ If you prefer not to use the plugin:
 
 ```vue
 <script setup lang="ts">
-import { provideI18n } from '@qzl/typed-i18n-vue';
+import { provideI18n } from '@qzlcorp/typed-i18n-vue';
 
 // In root component
 provideI18n(i18n);
@@ -115,7 +115,7 @@ provideI18n(i18n);
 
 ```vue
 <script setup lang="ts">
-import { useI18n } from '@qzl/typed-i18n-vue';
+import { useI18n } from '@qzlcorp/typed-i18n-vue';
 
 // In child components
 const { t } = useI18n();

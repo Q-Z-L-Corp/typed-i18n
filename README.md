@@ -1,4 +1,4 @@
-# @qzl/typed-i18n
+# @qzlcorp/typed-i18n
 
 Type-safe internationalization library with zero dependencies and framework integrations.
 
@@ -10,9 +10,9 @@ Type-safe internationalization library with zero dependencies and framework inte
 
 This is a monorepo containing multiple packages:
 
-- **[@qzl/typed-i18n](./packages/core)** - Core library (zero dependencies)
-- **[@qzl/typed-i18n-react](./packages/react)** - React bindings with hooks
-- **[@qzl/typed-i18n-vue](./packages/vue)** - Vue 3 bindings with composables
+- **[@qzlcorp/typed-i18n](./packages/core)** - Core library (zero dependencies)
+- **[@qzlcorp/typed-i18n-react](./packages/react)** - React bindings with hooks
+- **[@qzlcorp/typed-i18n-vue](./packages/vue)** - Vue 3 bindings with composables
 
 ## Demo Apps
 
@@ -33,13 +33,13 @@ This is a monorepo containing multiple packages:
 
 ```bash
 # Core library only
-pnpm add @qzl/typed-i18n
+pnpm add @qzlcorp/typed-i18n
 
 # With React
-pnpm add @qzl/typed-i18n @qzl/typed-i18n-react
+pnpm add @qzlcorp/typed-i18n @qzlcorp/typed-i18n-react
 
 # With Vue
-pnpm add @qzl/typed-i18n @qzl/typed-i18n-vue
+pnpm add @qzlcorp/typed-i18n @qzlcorp/typed-i18n-vue
 ```
 
 ## Quick Start
@@ -47,7 +47,7 @@ pnpm add @qzl/typed-i18n @qzl/typed-i18n-vue
 ### Core Library (Vanilla JS/TS)
 
 ```typescript
-import { createI18n, defineModule } from '@qzl/typed-i18n';
+import { createI18n, defineModule } from '@qzlcorp/typed-i18n';
 
 // Define translation module
 const common = defineModule('common')<typeof enCommon>({
@@ -73,7 +73,7 @@ i18n.t('common.hello'); // "Bonjour"
 ### React
 
 ```tsx
-import { I18nProvider, useTranslation, useLocale } from '@qzl/typed-i18n-react';
+import { I18nProvider, useTranslation, useLocale } from '@qzlcorp/typed-i18n-react';
 
 function App() {
   return (
@@ -104,7 +104,7 @@ function MyComponent() {
 
 ```vue
 <script setup lang="ts">
-import { useI18n } from '@qzl/typed-i18n-vue';
+import { useI18n } from '@qzlcorp/typed-i18n-vue';
 
 const { t, locale, setLocale, locales } = useI18n();
 </script>
@@ -151,9 +151,9 @@ pnpm clean
 ```
 typed-i18n/
 ├── packages/
-│   ├── core/           # @qzl/typed-i18n
-│   ├── react/          # @qzl/typed-i18n-react
-│   └── vue/            # @qzl/typed-i18n-vue
+│   ├── core/           # @qzlcorp/typed-i18n
+│   ├── react/          # @qzlcorp/typed-i18n-react
+│   └── vue/            # @qzlcorp/typed-i18n-vue
 ├── pnpm-workspace.yaml
 └── package.json
 ```

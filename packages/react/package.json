@@ -1,7 +1,7 @@
 {
-	"name": "@qzl/typed-i18n-react",
+	"name": "@qzlcorp/typed-i18n-react",
 	"version": "1.0.0",
-	"description": "React bindings for @qzl/typed-i18n",
+	"description": "React bindings for @qzlcorp/typed-i18n",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
@@ -31,12 +31,12 @@
 	"author": "Errong Leng <errong.leng@gmail.com>",
 	"license": "MIT",
 	"peerDependencies": {
-		"@qzl/typed-i18n": "^1.0.0",
+		"@qzlcorp/typed-i18n": "^1.0.0",
 		"react": "^18.0.0 || ^19.0.0",
 		"react-dom": "^18.0.0 || ^19.0.0"
 	},
 	"devDependencies": {
-		"@qzl/typed-i18n": "workspace:*",
+		"@qzlcorp/typed-i18n": "workspace:*",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/react": "^14.3.1",
 		"@types/react": "^18.2.0",

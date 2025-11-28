@@ -1,6 +1,6 @@
-# @qzl/typed-i18n-react
+# @qzlcorp/typed-i18n-react
 
-React bindings for `@qzl/typed-i18n` with full TypeScript support.
+React bindings for `@qzlcorp/typed-i18n` with full TypeScript support.
 
 ## Live Demo
 
@@ -9,7 +9,7 @@ React bindings for `@qzl/typed-i18n` with full TypeScript support.
 ## Installation
 
 ```bash
-pnpm add @qzl/typed-i18n @qzl/typed-i18n-react
+pnpm add @qzlcorp/typed-i18n @qzlcorp/typed-i18n-react
 ```
 
 ## Usage
@@ -76,8 +76,8 @@ Keep the modules object stable (imported or memoized) to avoid unnecessary effec
 ### Setup Provider
 
 ```tsx
-import { createI18n, defineModule } from '@qzl/typed-i18n';
-import { I18nProvider } from '@qzl/typed-i18n-react';
+import { createI18n, defineModule } from '@qzlcorp/typed-i18n';
+import { I18nProvider } from '@qzlcorp/typed-i18n-react';
 
 // Define your modules
 const common = defineModule('common')<typeof enCommon>({
@@ -105,7 +105,7 @@ function App() {
 ### Use in Components
 
 ```tsx
-import { useTranslation, useLocale } from '@qzl/typed-i18n-react';
+import { useTranslation, useLocale } from '@qzlcorp/typed-i18n-react';
 
 function MyComponent() {
   const { t, locale } = useTranslation();

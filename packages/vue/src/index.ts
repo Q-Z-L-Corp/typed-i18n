@@ -5,7 +5,7 @@ import type {
 	ModuleKeys,
 	LocalesFromModules,
 	Params,
-} from "@qzl/typed-i18n";
+} from "@qzlcorp/typed-i18n";
 
 // -------------------------
 // Injection Key

@@ -1,7 +1,7 @@
 {
 	"app": {
 		"title": "Aplicación de Prueba i18n Tipada",
-		"subtitle": "Probando el paquete @qzl/typed-i18n-react"
+		"subtitle": "Probando el paquete @qzlcorp/typed-i18n-react"
 	},
 	"greeting": {
 		"hello": "Hola",

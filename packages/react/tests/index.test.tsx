@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { renderHook, waitFor, act } from "@testing-library/react";
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { defineModule, createI18n } from "@qzl/typed-i18n";
+import { defineModule, createI18n } from "@qzlcorp/typed-i18n";
 import { I18nProvider, useTranslation, useLocale, useI18n } from "../src/index";
 
 // Test translation data
