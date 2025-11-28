@@ -9,7 +9,10 @@
 		"test": "pnpm -r test",
 		"lint": "biome check",
 		"format": "biome format --write",
-		"clean": "pnpm -r clean"
+		"clean": "pnpm -r clean",
+		"version:core": "cd packages/core && pnpm version",
+		"version:react": "cd packages/react && pnpm version",
+		"version:vue": "cd packages/vue && pnpm version"
 	},
 	"keywords": [
 		"i18n",

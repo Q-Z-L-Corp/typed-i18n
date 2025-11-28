@@ -31,9 +31,10 @@
 	"author": "Errong Leng <errong.leng@gmail.com>",
 	"license": "MIT",
 	"peerDependencies": {
-		"@qzl/typed-i18n": "workspace:*"
+		"@qzl/typed-i18n": "^1.0.0"
 	},
 	"devDependencies": {
+		"@qzl/typed-i18n": "workspace:*",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/react": "^14.3.1",
 		"@testing-library/react-hooks": "^8.0.1",

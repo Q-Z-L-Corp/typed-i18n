@@ -30,10 +30,11 @@
 	"author": "Errong Leng <errong.leng@gmail.com>",
 	"license": "MIT",
 	"peerDependencies": {
-		"@qzl/typed-i18n": "workspace:*",
+		"@qzl/typed-i18n": "^1.0.0",
 		"vue": "^3.0.0"
 	},
 	"devDependencies": {
+		"@qzl/typed-i18n": "workspace:*",
 		"@vitejs/plugin-vue": "^6.0.2",
 		"@vue/test-utils": "^2.4.0",
 		"happy-dom": "^20.0.11",
