@@ -4,9 +4,7 @@ React bindings for `@qzlcorp/typed-i18n` with full TypeScript support.
 
 ## Demo
 
-<video src="https://typed-i18n.vercel.app/typed-i18n-demo.mp4" controls autoplay muted loop playsinline width="720">
-  Your browser does not support the video tag.
-</video>
+![Typed-i18n type-safety demo](./../../apps/react-demo/public/typed-i18n-demo.gif)
 
 *See how TypeScript ensures type-safe translations in React apps with full autocomplete and compile-time validation.*
 
