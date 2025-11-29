@@ -2,9 +2,7 @@
 
 React bindings for `@qzlcorp/typed-i18n` with full TypeScript support.
 
-## Demo
-
-![Typed-i18n type-safety demo](./../../apps/react-demo/public/typed-i18n-demo.gif)
+![Typed-i18n type-safety demo](https://typed-i18n.vercel.app/typed-i18n-demo.gif)
 
 *See how TypeScript ensures type-safe translations in React apps with full autocomplete and compile-time validation.*
 
@@ -177,6 +175,12 @@ Returns the full i18n instance for advanced use cases.
 ✅ **React 18 Ready** - Built with modern React patterns  
 ✅ **Small Bundle** - Minimal overhead  
 ✅ **Tree Shakeable** - Only import what you use  
+
+## Support
+
+<a href="https://buymeacoffee.com/qzlcorp">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me a Coffee" height="40" />
+</a>
 
 ## License
 

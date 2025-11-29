@@ -1,7 +1,15 @@
 # @qzlcorp/typed-i18n
 
 A zero-dependency, TypeScript-first i18n library with module-based organization and compile-time type safety. Inspired by modern i18n libraries, designed for scalability and code-splitting.
- 
+
+![Typed-i18n type-safety demo](https://typed-i18n.vercel.app/typed-i18n-demo.gif)
+
+*Watch how TypeScript catches translation key errors at compile time, ensuring type-safe i18n throughout your app.*
+
+## Live Demo
+
+🚀 **[View React Demo](https://typed-i18n.vercel.app/)** - Interactive demo showcasing dynamic module loading, locale switching, and type-safe translations.
+
 ## Features
 
 - **Module-based architecture**: Organize translations by feature/page for better code-splitting
@@ -305,6 +313,12 @@ Dynamic module loading returns a widened instance you should propagate via conte
 const settings = defineModule('settings')<typeof enSettings>({ en: enSettings, fr: frSettings });
 const i18n2 = i18n.addModule(settings); // new instance with settings.* keys typed
 ```
+
+## Support
+
+<a href="https://buymeacoffee.com/qzlcorp">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me a Coffee" height="40" />
+</a>
 
 ## License
 

@@ -2,6 +2,10 @@
 
 Vue 3 bindings for `@qzlcorp/typed-i18n` with full TypeScript support.
 
+![Typed-i18n type-safety demo](https://typed-i18n.vercel.app/typed-i18n-demo.gif)
+
+*Watch how TypeScript catches translation key errors at compile time, ensuring type-safe i18n throughout your app.*
+
 ## Installation
 
 ```bash
@@ -153,6 +157,12 @@ Alternative provide/inject pattern if you don't want to use the plugin.
 ✅ **Vue 3 Composition API** - Built with modern Vue patterns  
 ✅ **Global Property** - Use `$t` in templates  
 ✅ **Tree Shakeable** - Only import what you use  
+
+## Support
+
+<a href="https://buymeacoffee.com/qzlcorp">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me a Coffee" height="40" />
+</a>
 
 ## License
 
