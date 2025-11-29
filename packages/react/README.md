@@ -180,4 +180,4 @@ Returns the full i18n instance for advanced use cases.
 
 ## License
 
-MIT
+MIT © Q.Z.L Corp.

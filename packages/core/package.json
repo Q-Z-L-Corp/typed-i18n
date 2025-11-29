@@ -28,7 +28,10 @@
 		"type-safe",
 		"translations"
 	],
-	"author": "Errong Leng <errong.leng@gmail.com>",
+	"author": "Q.Z.L Corp.",
+	"contributors": [
+		"Errong Leng <errong.leng@gmail.com>"
+	],
 	"license": "MIT",
 	"devDependencies": {
 		"tsup": "^8.5.1",

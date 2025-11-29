@@ -308,4 +308,4 @@ const i18n2 = i18n.addModule(settings); // new instance with settings.* keys typ
 
 ## License
 
-MIT
+MIT © Q.Z.L Corp.

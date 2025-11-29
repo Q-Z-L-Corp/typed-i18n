@@ -156,4 +156,4 @@ Alternative provide/inject pattern if you don't want to use the plugin.
 
 ## License
 
-MIT
+MIT © Q.Z.L Corp.

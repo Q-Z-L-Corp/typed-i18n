@@ -28,7 +28,10 @@
 		"typescript",
 		"hooks"
 	],
-	"author": "Errong Leng <errong.leng@gmail.com>",
+	"author": "Q.Z.L Corp.",
+	"contributors": [
+		"Errong Leng <errong.leng@gmail.com>"
+	],
 	"license": "MIT",
 	"peerDependencies": {
 		"@qzlcorp/typed-i18n": "^1.0.0",

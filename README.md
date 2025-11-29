@@ -168,6 +168,12 @@ typed-i18n/
 
 Contributions are welcome! Please read the individual package documentation for development guidelines.
 
+## Support
+
+<a href="https://buymeacoffee.com/qzlcorp">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me a Coffee" height="40" />
+</a>
+
 ## License
 
-MIT © Errong Leng
+MIT © Q.Z.L Corp.
