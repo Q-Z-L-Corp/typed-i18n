@@ -2,6 +2,14 @@
 
 Type-safe internationalization library with zero dependencies and framework integrations.
 
+## Demo
+
+<video src="https://typed-i18n.vercel.app/typed-i18n-demo.mp4" controls autoplay muted loop playsinline width="720">
+  Your browser does not support the video tag.
+</video>
+
+*Watch how TypeScript catches translation key errors at compile time, ensuring type-safe i18n throughout your app.*
+
 ## Live Demo
 
 🚀 **[View React Demo](https://typed-i18n.vercel.app/)** - Interactive demo showcasing dynamic module loading, locale switching, and type-safe translations.
