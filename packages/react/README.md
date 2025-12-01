@@ -10,6 +10,10 @@ React bindings for `@qzlcorp/typed-i18n` with full TypeScript support.
 
 🚀 **[View Live Demo](https://typed-i18n.vercel.app/)** - See dynamic module loading, locale switching, and type-safe translations in action.
 
+## Used By
+
+- **[QZ-L.com](https://qz-l.com)** — Fast, secure URL shortening to share links easily. Shorten, track, and manage your URLs at https://qz-l.com.
+
 ## Installation
 
 ```bash

@@ -24,6 +24,10 @@ This is a monorepo containing multiple packages:
 
 - **[React Demo](./apps/react-demo)** - Full React demo showcasing all features
 
+## Used By
+
+- **[QZ-L.com](https://qz-l.com)** — Fast, secure URL shortening to share links easily. Shorten, track, and manage your URLs at https://qz-l.com.
+
 ## Features
 
 ✅ **100% Type-Safe** - Compile-time validation of all translation keys  
