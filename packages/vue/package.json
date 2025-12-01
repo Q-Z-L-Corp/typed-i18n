@@ -1,6 +1,6 @@
 {
 	"name": "@qzlcorp/typed-i18n-vue",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Vue bindings for @qzlcorp/typed-i18n",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
@@ -27,6 +27,14 @@
 		"internationalization",
 		"typescript"
 	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Q-Z-L-Corp/typed-i18n.git"
+	},
+	"homepage": "https://github.com/Q-Z-L-Corp/typed-i18n/tree/main/packages/vue#readme",
+	"bugs": {
+		"url": "https://github.com/Q-Z-L-Corp/typed-i18n/issues"
+	},
 	"author": "Q.Z.L Corp.",
 	"contributors": [
 		"Errong Leng <errong.leng@gmail.com>"
