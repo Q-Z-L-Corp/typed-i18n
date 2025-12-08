@@ -125,4 +125,65 @@ describe("typed-i18n modern API", () => {
 
 		warnSpy.mockRestore();
 	});
+
+	it("supports returnObjects option to get nested objects", () => {
+		const common = defineModule("common")<typeof en>({
+			en,
+			fr,
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { common },
+		});
+
+		// Return nested object
+		const statsObj = i18n.t("common.dashboard.stats", { returnObjects: true });
+		expect(statsObj).toEqual({ clicks: "{{count}} clicks" });
+
+		// Return entire dashboard object
+		const dashboardObj = i18n.t("common.dashboard", { returnObjects: true });
+		expect(dashboardObj).toEqual({
+			title: "Dashboard",
+			stats: { clicks: "{{count}} clicks" },
+		});
+
+		// With French locale
+		i18n.setLocale("fr");
+		const dashboardFr = i18n.t("common.dashboard", { returnObjects: true });
+		expect(dashboardFr).toEqual({
+			title: "Tableau de bord",
+			stats: { clicks: "{{count}} clics" },
+		});
+
+		// Regular string behavior still works
+		expect(i18n.t("common.common.ok")).toBe("D'accord");
+	});
+
+	it("supports both legacy params and new options signature", () => {
+		const common = defineModule("common")<typeof en>({
+			en,
+			fr,
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { common },
+		});
+
+		// Legacy params signature
+		expect(i18n.t("common.dashboard.stats.clicks", { count: 5 })).toBe("5 clicks");
+
+		// New options signature with params
+		expect(
+			i18n.t("common.dashboard.stats.clicks", {
+				params: { count: 10 },
+				returnObjects: false,
+			}),
+		).toBe("10 clicks");
+
+		// Options signature with returnObjects
+		const obj = i18n.t("common.dashboard.stats", { returnObjects: true });
+		expect(obj).toEqual({ clicks: "{{count}} clicks" });
+	});
 });

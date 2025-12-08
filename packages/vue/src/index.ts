@@ -5,7 +5,12 @@ import type {
 	ModuleKeys,
 	LocalesFromModules,
 	Params,
+	TranslateOptions,
+	JSONValue,
 } from "@qzlcorp/typed-i18n";
+
+// Re-export types for convenience
+export type { Params, TranslateOptions, JSONValue };
 
 // -------------------------
 // Injection Key
@@ -37,8 +42,10 @@ export function createI18nPlugin<TModules extends Record<string, I18nModule>>(
 			app.provide(I18nSymbol, state);
 
 			// Global property
-			app.config.globalProperties.$t = (key: ModuleKeys<TModules>, params?: Params) =>
-				state.i18n.t(key, params);
+			app.config.globalProperties.$t = (
+				key: ModuleKeys<TModules>,
+				paramsOrOptions?: Params | TranslateOptions,
+			) => state.i18n.t(key, paramsOrOptions as any);
 		},
 	};
 }
@@ -54,7 +61,11 @@ export function useI18n<TModules extends Record<string, I18nModule>>() {
 	}
 
 	return {
-		t: (key: ModuleKeys<TModules>, params?: Params) => state.i18n.t(key, params),
+		t: ((key: ModuleKeys<TModules>, paramsOrOptions?: Params | TranslateOptions) =>
+			state.i18n.t(key, paramsOrOptions as any)) as {
+			(key: ModuleKeys<TModules>, params?: Params): string;
+			(key: ModuleKeys<TModules>, options?: TranslateOptions): string | JSONValue;
+		},
 		locale: computed(() => state.locale),
 		setLocale: (locale: LocalesFromModules<TModules>) => {
 			state.i18n.setLocale(locale);

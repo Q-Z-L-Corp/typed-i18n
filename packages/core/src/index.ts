@@ -135,6 +135,13 @@ export type Paths<T> = _Paths<T, 9>;
 
 export type Params = Record<string, string | number | boolean>;
 
+export interface TranslateOptions {
+	/** Interpolation parameters */
+	params?: Params;
+	/** Return the full object/array instead of string (like i18next returnObjects) */
+	returnObjects?: boolean;
+}
+
 // -------------------------
 // Module path utilities
 // -------------------------
@@ -167,8 +174,11 @@ export interface I18nOptions<TModules extends Record<string, I18nModule>> {
 }
 
 export interface I18nInstance<TModules extends Record<string, I18nModule>> {
-	/** Translate a key with optional parameters */
-	t: <K extends ModuleKeys<TModules>>(key: K, params?: Params) => string;
+	/** Translate a key with optional parameters or options */
+	t: {
+		<K extends ModuleKeys<TModules>>(key: K, params?: Params): string;
+		<K extends ModuleKeys<TModules>>(key: K, options?: TranslateOptions): string | JSONValue;
+	};
 	/** Get current locale */
 	getLocale: () => LocalesFromModules<TModules>;
 	/** Change current locale */
@@ -242,7 +252,25 @@ export function createI18n<TModules extends Record<string, I18nModule>>(
 		});
 	}
 
-	function t(key: string, params?: Params): string {
+	function t(key: string, paramsOrOptions?: Params | TranslateOptions): string | JSONValue {
+		// Parse arguments - support both legacy (params) and new (options) signatures
+		let params: Params | undefined;
+		let returnObjects = false;
+
+		if (
+			paramsOrOptions &&
+			typeof paramsOrOptions === "object" &&
+			"returnObjects" in paramsOrOptions
+		) {
+			// New options signature
+			const options = paramsOrOptions as TranslateOptions;
+			params = options.params;
+			returnObjects = options.returnObjects ?? false;
+		} else {
+			// Legacy params signature
+			params = paramsOrOptions as Params | undefined;
+		}
+
 		// Split namespace.key
 		const firstDotIndex = key.indexOf(".");
 		if (firstDotIndex === -1) return key; // No namespace
@@ -263,8 +291,18 @@ export function createI18n<TModules extends Record<string, I18nModule>>(
 			value = getFromPath(translation, translationKey);
 		}
 
-		if (typeof value === "string") return interpolate(value, params);
 		if (value == null) return key;
+
+		// Handle returnObjects option - return raw value (object/array/primitive)
+		if (returnObjects) {
+			return value;
+		}
+
+		// Default string behavior - interpolate if string, otherwise stringify
+		if (typeof value === "string") {
+			return interpolate(value, params);
+		}
+
 		return String(value);
 	}
 

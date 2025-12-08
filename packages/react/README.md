@@ -149,8 +149,32 @@ Provider component that makes i18n instance available to all child components.
 Returns translation function and current locale.
 
 **Returns:**
-- `t(key, params?)` - Translate function (fully typed when generic provided)
+- `t(key, params?)` - Translate function with parameter interpolation
+- `t(key, options?)` - Translate function with options (supports `returnObjects`)
 - `locale` - Current active locale
+
+```typescript
+function MyComponent() {
+  const { t, locale } = useTranslation();
+  
+  // Simple translation
+  const title = t('common.title');
+  
+  // With parameters
+  const greeting = t('common.greeting', { name: 'React' });
+  
+  // Get nested objects (i18next compatible)
+  const config = t('app.config', { returnObjects: true });
+  
+  // Both params and returnObjects
+  const data = t('dashboard.stats', { 
+    params: { count: 5 }, 
+    returnObjects: false 
+  });
+  
+  return <div>{title}</div>;
+}
+```
 
 ⚠️ Pass your module type generic (e.g. `useTranslation<I18nModules>()`) for strict key unions.
 

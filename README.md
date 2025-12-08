@@ -38,6 +38,7 @@ This is a monorepo containing multiple packages:
 ✅ **Dynamic Loading** - Load translations on-demand  
 ✅ **Fallback Support** - Automatic fallback to default locale  
 ✅ **Runtime Validation** - Detailed warnings for structural mismatches  
+✅ **Return Objects** - Get nested translation objects (i18next compatible)  
 
 ## Installation
 
@@ -75,6 +76,13 @@ const i18n = createI18n({
 // Use translations
 i18n.t('common.hello'); // "Hello"
 
+// With parameters
+i18n.t('common.greeting', { name: 'World' }); // "Hello World"
+
+// Get nested objects (i18next compatible)
+const messages = i18n.t('common.messages', { returnObjects: true });
+// Returns: { welcome: "Welcome", goodbye: "Goodbye" }
+
 // Change locale
 i18n.setLocale('fr');
 i18n.t('common.hello'); // "Bonjour"
@@ -97,9 +105,13 @@ function MyComponent() {
   const { t } = useTranslation();
   const { locale, setLocale, locales } = useLocale();
   
+  // Get nested objects
+  const stats = t('dashboard.stats', { returnObjects: true });
+  
   return (
     <div>
       <h1>{t('common.hello')}</h1>
+      <p>{t('common.greeting', { name: 'React' })}</p>
       <select value={locale} onChange={(e) => setLocale(e.target.value)}>
         {locales.map((loc) => (
           <option key={loc} value={loc}>{loc}</option>
@@ -117,11 +129,15 @@ function MyComponent() {
 import { useI18n } from '@qzlcorp/typed-i18n-vue';
 
 const { t, locale, setLocale, locales } = useI18n();
+
+// Get nested objects
+const config = t('app.config', { returnObjects: true });
 </script>
 
 <template>
   <div>
     <h1>{{ t('common.hello') }}</h1>
+    <p>{{ t('common.greeting', { name: 'Vue' }) }}</p>
     <select :value="locale" @change="setLocale($event.target.value)">
       <option v-for="loc in locales" :key="loc" :value="loc">
         {{ loc }}

@@ -428,4 +428,62 @@ describe("Component integration", () => {
 		// Should fallback to English
 		expect(screen.getByTestId("greeting")).toHaveTextContent("Hello");
 	});
+
+	it("supports returnObjects option in t function", () => {
+		const dashboard = defineModule("dashboard")<typeof dashboardEn>({
+			en: dashboardEn,
+			fr: dashboardFr,
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { dashboard },
+		});
+
+		const wrapper = ({ children }: { children: React.ReactNode }) => (
+			<I18nProvider i18n={i18n}>{children}</I18nProvider>
+		);
+
+		const { result } = renderHook(() => useTranslation(), { wrapper });
+
+		// Get nested object
+		const statsObj = result.current.t("dashboard.stats", { returnObjects: true });
+		expect(statsObj).toEqual({ users: "{{count}} users" });
+
+		// Regular string still works
+		expect(result.current.t("dashboard.title")).toBe("Dashboard");
+
+		// String from nested object with params
+		expect(result.current.t("dashboard.stats.users", { count: 5 })).toBe("5 users");
+	});
+
+	it("supports both params and options signature", () => {
+		const dashboard = defineModule("dashboard")<typeof dashboardEn>({
+			en: dashboardEn,
+			fr: dashboardFr,
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { dashboard },
+		});
+
+		const wrapper = ({ children }: { children: React.ReactNode }) => (
+			<I18nProvider i18n={i18n}>{children}</I18nProvider>
+		);
+
+		const { result } = renderHook(() => useTranslation(), { wrapper });
+
+		// Legacy params
+		expect(result.current.t("dashboard.stats.users", { count: 5 })).toBe("5 users");
+
+		// New options with params
+		expect(
+			result.current.t("dashboard.stats.users", { params: { count: 10 }, returnObjects: false }),
+		).toBe("10 users");
+
+		// Options with returnObjects
+		const obj = result.current.t("dashboard.stats", { returnObjects: true });
+		expect(obj).toEqual({ users: "{{count}} users" });
+	});
 });

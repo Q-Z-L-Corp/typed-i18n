@@ -488,4 +488,107 @@ describe("Global $t property", () => {
 
 		expect(wrapper.find('[data-testid="greeting"]').text()).toBe("Bonjour");
 	});
+
+	it("supports returnObjects option", async () => {
+		const dashboard = defineModule("dashboard")<typeof dashboardEn>({
+			en: dashboardEn,
+			fr: dashboardFr,
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { dashboard },
+		});
+
+		const plugin = createI18nPlugin({ i18n });
+
+		const TestComponent = defineComponent({
+			setup() {
+				const { t } = useI18n();
+
+				// Get nested object
+				const statsObj = t("dashboard.stats", { returnObjects: true });
+
+				// Regular string
+				const title = t("dashboard.title");
+
+				// String with params
+				const userCount = t("dashboard.stats.users", { count: 5 });
+
+				return { statsObj, title, userCount };
+			},
+			template: `
+				<div>
+					<p data-testid="stats-obj">{{ JSON.stringify(statsObj) }}</p>
+					<p data-testid="title">{{ title }}</p>
+					<p data-testid="user-count">{{ userCount }}</p>
+				</div>
+			`,
+		});
+
+		const wrapper = mount(TestComponent, {
+			global: {
+				plugins: [plugin],
+			},
+		});
+
+		expect(wrapper.find('[data-testid="stats-obj"]').text()).toBe(
+			JSON.stringify({ users: "{{count}} users" }),
+		);
+		expect(wrapper.find('[data-testid="title"]').text()).toBe("Dashboard");
+		expect(wrapper.find('[data-testid="user-count"]').text()).toBe("5 users");
+	});
+
+	it("supports both params and options signature", async () => {
+		const dashboard = defineModule("dashboard")<typeof dashboardEn>({
+			en: dashboardEn,
+			fr: dashboardFr,
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { dashboard },
+		});
+
+		const plugin = createI18nPlugin({ i18n });
+
+		const TestComponent = defineComponent({
+			setup() {
+				const { t } = useI18n();
+
+				// Legacy params signature
+				const legacy = t("dashboard.stats.users", { count: 10 });
+
+				// New options signature with params
+				const withOptions = t("dashboard.stats.users", {
+					params: { count: 20 },
+					returnObjects: false,
+				});
+
+				// Options with returnObjects
+				const obj = t("dashboard.stats", { returnObjects: true });
+
+				return { legacy, withOptions, obj };
+			},
+			template: `
+				<div>
+					<p data-testid="legacy">{{ legacy }}</p>
+					<p data-testid="with-options">{{ withOptions }}</p>
+					<p data-testid="obj">{{ JSON.stringify(obj) }}</p>
+				</div>
+			`,
+		});
+
+		const wrapper = mount(TestComponent, {
+			global: {
+				plugins: [plugin],
+			},
+		});
+
+		expect(wrapper.find('[data-testid="legacy"]').text()).toBe("10 users");
+		expect(wrapper.find('[data-testid="with-options"]').text()).toBe("20 users");
+		expect(wrapper.find('[data-testid="obj"]').text()).toBe(
+			JSON.stringify({ users: "{{count}} users" }),
+		);
+	});
 });

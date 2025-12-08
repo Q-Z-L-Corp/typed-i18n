@@ -140,11 +140,39 @@ Creates a Vue plugin for i18n.
 Composable that returns translation and locale management.
 
 **Returns:**
-- `t(key, params?)` - Translate function (fully typed)
+- `t(key, params?)` - Translate function with parameter interpolation
+- `t(key, options?)` - Translate function with options (supports `returnObjects`)
 - `locale` - Computed ref of current locale
 - `setLocale(locale)` - Change locale (triggers reactivity)
 - `locales` - Computed ref of all available locales
 - `i18n` - Full i18n instance
+
+```vue
+<script setup lang="ts">
+import { useI18n } from '@qzlcorp/typed-i18n-vue';
+
+const { t, locale, setLocale, locales } = useI18n();
+
+// Simple translation
+const title = t('common.title');
+
+// With parameters
+const greeting = t('common.greeting', { name: 'Vue' });
+
+// Get nested objects (i18next compatible)
+const config = t('app.config', { returnObjects: true });
+
+// Both params and returnObjects
+const data = t('dashboard.stats', { 
+  params: { count: 5 }, 
+  returnObjects: false 
+});
+</script>
+
+<template>
+  <div>{{ title }}</div>
+</template>
+```
 
 ### `provideI18n(i18n)` / `injectI18n()`
 

@@ -77,6 +77,10 @@ i18n.t('common.hello');  // "Bonjour"
 
 // Interpolation
 i18n.t('common.greeting', { name: 'John' });  // Supports {{name}} in JSON
+
+// Get nested objects (i18next returnObjects compatible)
+const messages = i18n.t('common.messages', { returnObjects: true });
+// Returns the entire messages object instead of a string
 ```
 
 ## Advanced Usage
@@ -210,10 +214,32 @@ Creates an i18n instance.
 
 **Returns:**
 - `t(key, params?)`: Translate function
+  - `t(key, params)`: Legacy signature for simple parameter interpolation
+  - `t(key, options)`: New signature supporting `{ params?, returnObjects? }`
 - `setLocale(locale)`: Change current locale
 - `getLocale()`: Get current locale
 - `addModule(module)`: Add module dynamically, **returns new typed instance**
 - `getLocales()`: Get all available locales
+
+**Translation Options:**
+```typescript
+interface TranslateOptions {
+  params?: Record<string, string | number | boolean>;
+  returnObjects?: boolean;  // Return nested objects instead of strings
+}
+
+// Simple parameter interpolation
+i18n.t('common.greeting', { name: 'World' });
+
+// Return nested objects (i18next compatible)
+const stats = i18n.t('dashboard.stats', { returnObjects: true });
+
+// Both params and returnObjects
+const data = i18n.t('config.settings', { 
+  params: { count: 5 }, 
+  returnObjects: false 
+});
+```
 
 **Important**: `addModule()` returns a new instance with updated types to preserve type safety:
 

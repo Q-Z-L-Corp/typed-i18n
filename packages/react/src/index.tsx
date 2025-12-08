@@ -14,7 +14,12 @@ import type {
 	ModuleKeys,
 	LocalesFromModules,
 	Params,
+	TranslateOptions,
+	JSONValue,
 } from "@qzlcorp/typed-i18n";
+
+// Re-export types for convenience
+export type { Params, TranslateOptions, JSONValue };
 
 type ModuleRecord = Record<string, I18nModule>;
 type EmptyModules = Record<never, I18nModule>;
@@ -84,7 +89,10 @@ export function I18nProvider<TModules extends Record<string, I18nModule>>({
 // useTranslation Hook
 // -------------------------
 export interface UseTranslationResult<TModules extends Record<string, I18nModule>> {
-	t: (key: ModuleKeys<TModules>, params?: Params) => string;
+	t: {
+		(key: ModuleKeys<TModules>, params?: Params): string;
+		(key: ModuleKeys<TModules>, options?: TranslateOptions): string | JSONValue;
+	};
 	locale: LocalesFromModules<TModules>;
 }
 
