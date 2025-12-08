@@ -39,6 +39,7 @@ This is a monorepo containing multiple packages:
 ✅ **Fallback Support** - Automatic fallback to default locale  
 ✅ **Runtime Validation** - Detailed warnings for structural mismatches  
 ✅ **Return Objects** - Get nested translation objects (i18next compatible)  
+✅ **Trans Component** - Safe HTML/JSX translation without XSS risks (React)  
 
 ## Installation
 
@@ -91,7 +92,7 @@ i18n.t('common.hello'); // "Bonjour"
 ### React
 
 ```tsx
-import { I18nProvider, useTranslation, useLocale } from '@qzlcorp/typed-i18n-react';
+import { I18nProvider, useTranslation, useLocale, Trans } from '@qzlcorp/typed-i18n-react';
 
 function App() {
   return (
@@ -112,12 +113,22 @@ function MyComponent() {
     <div>
       <h1>{t('common.hello')}</h1>
       <p>{t('common.greeting', { name: 'React' })}</p>
+      
+      {/* Trans component for HTML/JSX translations */}
+      <Trans 
+        i18nKey="common.welcome" 
+        values={{ name: 'React' }}
+        components={{ link: <a href="/profile" /> }}
+      />
+      
       <select value={locale} onChange={(e) => setLocale(e.target.value)}>
         {locales.map((loc) => (
           <option key={loc} value={loc}>{loc}</option>
         ))}
       </select>
     </div>
+  );
+}
   );
 }
 ```

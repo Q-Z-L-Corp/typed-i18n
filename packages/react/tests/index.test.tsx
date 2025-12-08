@@ -3,7 +3,7 @@ import { renderHook, waitFor, act } from "@testing-library/react";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { defineModule, createI18n } from "@qzlcorp/typed-i18n";
-import { I18nProvider, useTranslation, useLocale, useI18n } from "../src/index";
+import { I18nProvider, useTranslation, useLocale, useI18n, Trans } from "../src/index";
 
 // Test translation data
 const commonEn = {
@@ -485,5 +485,218 @@ describe("Component integration", () => {
 		// Options with returnObjects
 		const obj = result.current.t("dashboard.stats", { returnObjects: true });
 		expect(obj).toEqual({ users: "{{count}} users" });
+	});
+});
+
+describe("Trans Component", () => {
+	it("renders basic HTML tags", () => {
+		const messages = defineModule("messages")<{
+			welcome: string;
+		}>({
+			en: {
+				welcome: "Hello <strong>World</strong>!",
+			},
+			fr: {
+				welcome: "Bonjour <strong>Monde</strong>!",
+			},
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { messages },
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans i18nKey="messages.welcome" />
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("Hello World!");
+		expect(content.querySelector("strong")).toBeTruthy();
+		expect(content.querySelector("strong")?.textContent).toBe("World");
+	});
+
+	it("renders with interpolation values", () => {
+		const messages = defineModule("messages")<{
+			greeting: string;
+		}>({
+			en: {
+				greeting: "Hello <strong>{{name}}</strong>, welcome!",
+			},
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { messages },
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans i18nKey="messages.greeting" values={{ name: "John" }} />
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("Hello John, welcome!");
+		expect(content.querySelector("strong")?.textContent).toBe("John");
+	});
+
+	it("renders with custom components", () => {
+		const messages = defineModule("messages")<{
+			action: string;
+		}>({
+			en: {
+				action: "Click <link>here</link> to continue",
+			},
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { messages },
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans
+						i18nKey="messages.action"
+						components={{
+							link: <a href="/next" className="custom-link" />,
+						}}
+					/>
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("Click here to continue");
+		const link = content.querySelector("a");
+		expect(link).toBeTruthy();
+		expect(link?.getAttribute("href")).toBe("/next");
+		expect(link?.className).toBe("custom-link");
+		expect(link?.textContent).toBe("here");
+	});
+
+	it("renders multiple tags", () => {
+		const messages = defineModule("messages")<{
+			formatted: string;
+		}>({
+			en: {
+				formatted: "This is <strong>bold</strong> and this is <em>italic</em>.",
+			},
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { messages },
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans i18nKey="messages.formatted" />
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("This is bold and this is italic.");
+		expect(content.querySelector("strong")?.textContent).toBe("bold");
+		expect(content.querySelector("em")?.textContent).toBe("italic");
+	});
+
+	it("renders nested tags", () => {
+		const messages = defineModule("messages")<{
+			nested: string;
+		}>({
+			en: {
+				nested: "This is <strong>bold with <em>italic</em> inside</strong>.",
+			},
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { messages },
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans i18nKey="messages.nested" />
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("This is bold with italic inside.");
+		const strong = content.querySelector("strong");
+		expect(strong).toBeTruthy();
+		expect(strong?.querySelector("em")?.textContent).toBe("italic");
+	});
+
+	it("works without default components when defaults=false", () => {
+		const messages = defineModule("messages")<{
+			text: string;
+		}>({
+			en: {
+				text: "This <strong>won't</strong> be bold",
+			},
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { messages },
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans i18nKey="messages.text" defaults={false} />
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		// Without default components, tags should remain as text
+		expect(content.textContent).toBe("This <strong>won't</strong> be bold");
+		expect(content.querySelector("strong")).toBeNull();
+	});
+
+	it("combines interpolation with components", () => {
+		const messages = defineModule("messages")<{
+			profile: string;
+		}>({
+			en: {
+				profile: "Welcome <strong>{{name}}</strong>, <link>view profile</link>",
+			},
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { messages },
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans
+						i18nKey="messages.profile"
+						values={{ name: "Alice" }}
+						components={{ link: <a href="/profile" /> }}
+					/>
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("Welcome Alice, view profile");
+		expect(content.querySelector("strong")?.textContent).toBe("Alice");
+		expect(content.querySelector("a")?.textContent).toBe("view profile");
 	});
 });

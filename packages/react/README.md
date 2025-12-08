@@ -196,10 +196,62 @@ Returns the full i18n instance for advanced use cases.
 **Returns:**
 - Full `I18nInstance` with all methods
 
+### `<Trans>` Component
+
+Component for translating JSX with embedded HTML tags and React components. Safer than `dangerouslySetInnerHTML` - parses translation strings and builds React elements.
+
+**Props:**
+- `i18nKey` - Translation key (required)
+- `values` - Interpolation parameters (optional)
+- `components` - Custom React components to use for tags (optional)
+- `defaults` - Include default HTML components like `<strong>`, `<em>`, etc. (default: `true`)
+
+**Default supported tags** (when `defaults={true}`):
+- `<strong>`, `<b>` - Bold text
+- `<em>`, `<i>` - Italic text
+- `<u>` - Underlined text
+- `<br/>` - Line break
+- `<p>`, `<span>` - Block/inline containers
+
+```tsx
+// Translation JSON
+{
+  "welcome": "Hello <strong>{{name}}</strong>!",
+  "action": "Click <link>here</link> to continue"
+}
+
+// Basic HTML tags (no components needed)
+<Trans i18nKey="common.welcome" values={{ name: "John" }} />
+// Renders: Hello <strong>John</strong>!
+
+// Custom components
+<Trans 
+  i18nKey="common.action"
+  components={{ 
+    link: <a href="/next" className="btn" />
+  }}
+/>
+// Renders: Click <a href="/next" class="btn">here</a> to continue
+
+// Multiple tags
+// Translation: "This is <strong>bold</strong> and <em>italic</em>"
+<Trans i18nKey="common.formatted" />
+
+// Nested tags
+// Translation: "Text with <strong>bold and <em>italic</em> nested</strong>"
+<Trans i18nKey="common.nested" />
+
+// Disable default components
+<Trans i18nKey="common.text" defaults={false} components={{ custom: <CustomComponent /> }} />
+```
+
+**Safety note:** The `<Trans>` component does NOT use `dangerouslySetInnerHTML`. It safely parses the translation string and builds React elements using `React.cloneElement()`, preventing XSS vulnerabilities.
+
 ## Features
 
 ✅ **Automatic Re-renders** - Components re-render when locale changes  
 ✅ **Full Type Safety** - All translation keys are typed  
+✅ **Trans Component** - Safe HTML/JSX translation without XSS risks  
 ✅ **React 18 Ready** - Built with modern React patterns  
 ✅ **Small Bundle** - Minimal overhead  
 ✅ **Tree Shakeable** - Only import what you use  

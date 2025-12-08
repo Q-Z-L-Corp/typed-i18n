@@ -6,7 +6,10 @@ import {
 	useMemo,
 	useEffect,
 	useRef,
+	cloneElement,
+	isValidElement,
 	type ReactNode,
+	type ReactElement,
 } from "react";
 import type {
 	I18nInstance,
@@ -162,4 +165,126 @@ export function useI18n<TModules extends Record<string, I18nModule>>() {
 	}
 
 	return (context as I18nContextValue<TModules>).i18n;
+}
+
+// -------------------------
+// Trans Component
+// -------------------------
+
+// Default components for basic HTML tags
+const DEFAULT_COMPONENTS: Record<string, ReactElement> = {
+	strong: <strong />,
+	b: <b />,
+	em: <em />,
+	i: <i />,
+	u: <u />,
+	br: <br />,
+	p: <p />,
+	span: <span />,
+};
+
+export interface TransProps<TModules extends Record<string, I18nModule>> {
+	/** Translation key */
+	i18nKey: ModuleKeys<TModules>;
+	/** Interpolation values */
+	values?: Params;
+	/** Custom components to use for tags in translation */
+	components?: Record<string, ReactElement>;
+	/** Whether to include default HTML components (strong, em, etc.) */
+	defaults?: boolean;
+}
+
+/**
+ * Trans component for translating JSX with embedded components.
+ *
+ * @example
+ * // Translation: "Hello <strong>{{name}}</strong>, click <link>here</link>"
+ * <Trans
+ *   i18nKey="welcome"
+ *   values={{ name: "John" }}
+ *   components={{ link: <a href="/profile" /> }}
+ * />
+ */
+export function Trans<TModules extends Record<string, I18nModule>>({
+	i18nKey,
+	values = {},
+	components = {},
+	defaults = true,
+}: TransProps<TModules>) {
+	const context = useContext(I18nContext);
+
+	if (!context) {
+		throw new Error("Trans must be used within I18nProvider");
+	}
+
+	const { i18n } = context as I18nContextValue<TModules>;
+
+	// Merge default components with custom ones
+	const allComponents = defaults ? { ...DEFAULT_COMPONENTS, ...components } : components;
+
+	// Get the translation string
+	const translation = i18n.t(i18nKey, values) as string;
+
+	// Parse and render the translation
+	const elements = useMemo(
+		() => parseTranslation(translation, allComponents),
+		[translation, allComponents],
+	);
+
+	return <>{elements}</>;
+}
+
+/**
+ * Parse translation string and replace HTML tags with React components
+ */
+function parseTranslation(str: string, components: Record<string, ReactElement>): ReactNode[] {
+	const result: ReactNode[] = [];
+	let remaining = str;
+	let keyCounter = 0;
+
+	// Regex to match opening and closing tags with content
+	// Matches: <tagName>content</tagName> or <tagName attr="value">content</tagName>
+	const tagRegex = /<(\w+)(?:\s[^>]*)?>(.+?)<\/\1>/g;
+
+	let match: RegExpExecArray | null;
+	let lastIndex = 0;
+
+	while ((match = tagRegex.exec(str)) !== null) {
+		const [fullMatch, tagName, content] = match;
+		const matchIndex = match.index;
+
+		// Add text before this tag
+		if (matchIndex > lastIndex) {
+			const textBefore = str.substring(lastIndex, matchIndex);
+			if (textBefore) {
+				result.push(textBefore);
+			}
+		}
+
+		// Get the component for this tag
+		const component = components[tagName];
+
+		if (component && isValidElement(component)) {
+			// Recursively parse content in case of nested tags
+			const parsedContent = parseTranslation(content, components);
+
+			// Clone the component with the parsed content as children
+			result.push(cloneElement(component, { key: `trans-${keyCounter++}` }, ...parsedContent));
+		} else {
+			// If no component found, keep the original text
+			result.push(fullMatch);
+		}
+
+		lastIndex = tagRegex.lastIndex;
+	}
+
+	// Add any remaining text after the last tag
+	if (lastIndex < str.length) {
+		const textAfter = str.substring(lastIndex);
+		if (textAfter) {
+			result.push(textAfter);
+		}
+	}
+
+	return result;
 }
