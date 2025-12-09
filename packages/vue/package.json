@@ -1,6 +1,6 @@
 {
 	"name": "@qzlcorp/typed-i18n-vue",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Vue bindings for @qzlcorp/typed-i18n",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
