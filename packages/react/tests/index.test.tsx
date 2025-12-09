@@ -699,4 +699,105 @@ describe("Trans Component", () => {
 		expect(content.querySelector("strong")?.textContent).toBe("Alice");
 		expect(content.querySelector("a")?.textContent).toBe("view profile");
 	});
+
+	test("Trans component - using children as translation source", () => {
+		const i18n = createI18n({
+			locale: "en",
+			modules: {},
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans>
+						Hello <strong>world</strong>
+					</Trans>
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("Hello world");
+		expect(content.querySelector("strong")).toBeTruthy();
+		expect(content.querySelector("strong")?.textContent).toBe("world");
+	});
+
+	test("Trans component - children with interpolation", () => {
+		const i18n = createI18n({
+			locale: "en",
+			modules: {},
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans values={{ name: "John" }}>
+						Hello <strong>{"{{name}}"}</strong>
+					</Trans>
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("Hello John");
+		expect(content.querySelector("strong")).toBeTruthy();
+		expect(content.querySelector("strong")?.textContent).toBe("John");
+	});
+
+	test("Trans component - children with custom components", () => {
+		const i18n = createI18n({
+			locale: "en",
+			modules: {},
+		});
+
+		const CustomTag = ({ children }: { children?: React.ReactNode }) => (
+			<span className="custom">{children}</span>
+		);
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans components={{ custom: <CustomTag /> }}>
+						Hello <custom>world</custom>
+					</Trans>
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("Hello world");
+		expect(content.querySelector(".custom")).toBeTruthy();
+		expect(content.querySelector(".custom")?.textContent).toBe("world");
+	});
+
+	test("Trans component - i18nKey takes precedence over children", () => {
+		const messagesEn = {
+			greeting: "Bonjour <strong>monde</strong>",
+		};
+
+		const messages = defineModule("messages")<typeof messagesEn>({
+			en: messagesEn,
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { messages },
+		});
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans i18nKey="messages.greeting">
+						Hello <strong>world</strong>
+					</Trans>
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		// Should use i18nKey translation, not children
+		expect(content.textContent).toBe("Bonjour monde");
+		expect(content.querySelector("strong")).toBeTruthy();
+		expect(content.querySelector("strong")?.textContent).toBe("monde");
+	});
 });

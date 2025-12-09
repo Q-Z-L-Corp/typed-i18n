@@ -201,10 +201,13 @@ Returns the full i18n instance for advanced use cases.
 Component for translating JSX with embedded HTML tags and React components. Safer than `dangerouslySetInnerHTML` - parses translation strings and builds React elements.
 
 **Props:**
-- `i18nKey` - Translation key (required)
+- `i18nKey` - Translation key (optional - if not provided, uses `children`)
+- `children` - Can be used as the translation source instead of `i18nKey` (optional)
 - `values` - Interpolation parameters (optional)
 - `components` - Custom React components to use for tags (optional)
 - `defaults` - Include default HTML components like `<strong>`, `<em>`, etc. (default: `true`)
+
+**Note:** Either `i18nKey` or `children` should be provided. If both are present, `i18nKey` takes precedence.
 
 **Default supported tags** (when `defaults={true}`):
 - `<strong>`, `<b>` - Bold text
@@ -220,17 +223,29 @@ Component for translating JSX with embedded HTML tags and React components. Safe
   "action": "Click <link>here</link> to continue"
 }
 
-// Basic HTML tags (no components needed)
+// Using i18nKey (recommended for externalized translations)
 <Trans i18nKey="common.welcome" values={{ name: "John" }} />
 // Renders: Hello <strong>John</strong>!
 
-// Custom components
+// Using children as translation source (inline translations)
+<Trans values={{ name: "John" }}>
+  Hello <strong>{{name}}</strong>!
+</Trans>
+// Renders: Hello <strong>John</strong>!
+
+// Custom components with i18nKey
 <Trans 
   i18nKey="common.action"
   components={{ 
     link: <a href="/next" className="btn" />
   }}
 />
+// Renders: Click <a href="/next" class="btn">here</a> to continue
+
+// Custom components with children
+<Trans components={{ link: <a href="/next" className="btn" /> }}>
+  Click <link>here</link> to continue
+</Trans>
 // Renders: Click <a href="/next" class="btn">here</a> to continue
 
 // Multiple tags

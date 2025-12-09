@@ -184,32 +184,42 @@ const DEFAULT_COMPONENTS: Record<string, ReactElement> = {
 };
 
 export interface TransProps<TModules extends Record<string, I18nModule>> {
-	/** Translation key */
-	i18nKey: ModuleKeys<TModules>;
+	/** Translation key (optional if using children as translation string) */
+	i18nKey?: ModuleKeys<TModules>;
 	/** Interpolation values */
 	values?: Params;
 	/** Custom components to use for tags in translation */
 	components?: Record<string, ReactElement>;
 	/** Whether to include default HTML components (strong, em, etc.) */
 	defaults?: boolean;
+	/** Children to use as translation string if i18nKey is not provided */
+	children?: string;
 }
 
 /**
  * Trans component for translating JSX with embedded components.
  *
  * @example
+ * // With i18nKey
  * // Translation: "Hello <strong>{{name}}</strong>, click <link>here</link>"
  * <Trans
  *   i18nKey="welcome"
  *   values={{ name: "John" }}
  *   components={{ link: <a href="/profile" /> }}
  * />
+ *
+ * @example
+ * // With children
+ * <Trans values={{ name: "John" }} components={{ link: <a href="/profile" /> }}>
+ *   Hello <strong>{{name}}</strong>, click <link>here</link>
+ * </Trans>
  */
 export function Trans<TModules extends Record<string, I18nModule>>({
 	i18nKey,
 	values = {},
 	components = {},
 	defaults = true,
+	children,
 }: TransProps<TModules>) {
 	const context = useContext(I18nContext);
 
@@ -222,8 +232,22 @@ export function Trans<TModules extends Record<string, I18nModule>>({
 	// Merge default components with custom ones
 	const allComponents = defaults ? { ...DEFAULT_COMPONENTS, ...components } : components;
 
-	// Get the translation string
-	const translation = i18n.t(i18nKey, values) as string;
+	// Get the translation string - either from i18nKey or children
+	let translation: string;
+
+	if (i18nKey) {
+		// Use translation from i18nKey
+		translation = i18n.t(i18nKey, values) as string;
+	} else if (children) {
+		// Extract string from children
+		const childrenString = extractTranslationFromChildren(children);
+		// Apply interpolation if values are provided
+		translation =
+			Object.keys(values).length > 0 ? interpolateString(childrenString, values) : childrenString;
+	} else {
+		// Neither i18nKey nor children provided
+		return null;
+	}
 
 	// Parse and render the translation
 	const elements = useMemo(
@@ -232,6 +256,53 @@ export function Trans<TModules extends Record<string, I18nModule>>({
 	);
 
 	return <>{elements}</>;
+}
+
+/**
+ * Interpolate values into a string
+ */
+function interpolateString(str: string, values: Params): string {
+	return str.replace(/\{\{(\s*\w+\s*)\}\}/g, (_, key) => {
+		const value = values[key.trim()];
+		return value == null ? "" : String(value);
+	});
+}
+
+/**
+ * Extract a translation string from React children.
+ * Converts React elements to HTML-like string representation.
+ * Text nodes are preserved as-is, elements are converted to <tagName>...</tagName>.
+ */
+function extractTranslationFromChildren(children: ReactNode): string {
+	if (!children) {
+		return "";
+	}
+
+	const extractNode = (node: ReactNode): string => {
+		if (typeof node === "string" || typeof node === "number") {
+			return String(node);
+		}
+
+		if (Array.isArray(node)) {
+			return node.map(extractNode).join("");
+		}
+
+		if (isValidElement(node)) {
+			const tagName =
+				typeof node.type === "string"
+					? node.type
+					: typeof node.type === "function" && node.type.name
+						? node.type.name.toLowerCase()
+						: "component";
+
+			const childContent = extractNode(node.props.children);
+			return `<${tagName}>${childContent}</${tagName}>`;
+		}
+
+		return "";
+	};
+
+	return extractNode(children).trim();
 }
 
 /**
