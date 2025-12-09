@@ -233,6 +233,15 @@ Component for translating JSX with embedded HTML tags and React components. Safe
 </Trans>
 // Renders: Hello <strong>John</strong>!
 
+// Using children with JSX elements (preserves attributes)
+const description = (
+  <>
+    Check the <a href="/docs">documentation</a> for more info
+  </>
+);
+<Trans components={{ a: <a /> }}>{description}</Trans>
+// Renders: Check the <a href="/docs">documentation</a> for more info
+
 // Custom components with i18nKey
 <Trans 
   i18nKey="common.action"

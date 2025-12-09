@@ -800,4 +800,32 @@ describe("Trans Component", () => {
 		expect(content.querySelector("strong")).toBeTruthy();
 		expect(content.querySelector("strong")?.textContent).toBe("monde");
 	});
+
+	test("Trans component - children from variable with JSX", () => {
+		const i18n = createI18n({
+			locale: "en",
+			modules: {},
+		});
+
+		// Simulating a string variable with embedded JSX (like API docs)
+		const desc = (
+			<>
+				Check the <a href="/docs">documentation</a> for more info
+			</>
+		);
+
+		render(
+			<I18nProvider i18n={i18n}>
+				<div data-testid="content">
+					<Trans components={{ a: <a /> }}>{desc}</Trans>
+				</div>
+			</I18nProvider>,
+		);
+
+		const content = screen.getByTestId("content");
+		expect(content.textContent).toBe("Check the documentation for more info");
+		expect(content.querySelector("a")).toBeTruthy();
+		expect(content.querySelector("a")?.getAttribute("href")).toBe("/docs");
+		expect(content.querySelector("a")?.textContent).toBe("documentation");
+	});
 });

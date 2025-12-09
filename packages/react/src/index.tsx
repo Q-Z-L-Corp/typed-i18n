@@ -8,6 +8,7 @@ import {
 	useRef,
 	cloneElement,
 	isValidElement,
+	Fragment,
 	type ReactNode,
 	type ReactElement,
 } from "react";
@@ -193,7 +194,7 @@ export interface TransProps<TModules extends Record<string, I18nModule>> {
 	/** Whether to include default HTML components (strong, em, etc.) */
 	defaults?: boolean;
 	/** Children to use as translation string if i18nKey is not provided */
-	children?: string;
+	children?: ReactNode;
 }
 
 /**
@@ -288,6 +289,11 @@ function extractTranslationFromChildren(children: ReactNode): string {
 		}
 
 		if (isValidElement(node)) {
+			// Handle React Fragments - extract their children without wrapping
+			if (node.type === Fragment) {
+				return extractNode(node.props.children);
+			}
+
 			const tagName =
 				typeof node.type === "string"
 					? node.type
@@ -296,7 +302,18 @@ function extractTranslationFromChildren(children: ReactNode): string {
 						: "component";
 
 			const childContent = extractNode(node.props.children);
-			return `<${tagName}>${childContent}</${tagName}>`;
+
+			// Extract attributes (particularly href for <a> tags)
+			const props = node.props;
+			let attrs = "";
+			if (props && typeof props === "object") {
+				// Only extract href for now (can be extended for other attributes)
+				if (props.href) {
+					attrs = ` href="${props.href}"`;
+				}
+			}
+
+			return `<${tagName}${attrs}>${childContent}</${tagName}>`;
 		}
 
 		return "";
@@ -313,15 +330,15 @@ function parseTranslation(str: string, components: Record<string, ReactElement>)
 	let remaining = str;
 	let keyCounter = 0;
 
-	// Regex to match opening and closing tags with content
+	// Regex to match opening and closing tags with optional attributes
 	// Matches: <tagName>content</tagName> or <tagName attr="value">content</tagName>
-	const tagRegex = /<(\w+)(?:\s[^>]*)?>(.+?)<\/\1>/g;
+	const tagRegex = /<(\w+)(\s[^>]*)?>(.*?)<\/\1>/g;
 
 	let match: RegExpExecArray | null;
 	let lastIndex = 0;
 
 	while ((match = tagRegex.exec(str)) !== null) {
-		const [fullMatch, tagName, content] = match;
+		const [fullMatch, tagName, attrs, content] = match;
 		const matchIndex = match.index;
 
 		// Add text before this tag
@@ -339,8 +356,26 @@ function parseTranslation(str: string, components: Record<string, ReactElement>)
 			// Recursively parse content in case of nested tags
 			const parsedContent = parseTranslation(content, components);
 
-			// Clone the component with the parsed content as children
-			result.push(cloneElement(component, { key: `trans-${keyCounter++}` }, ...parsedContent));
+			// Parse attributes from the extracted string
+			const additionalProps: Record<string, any> = {};
+			if (attrs) {
+				// Extract attributes like href="value"
+				const attrRegex = /(\w+)="([^"]*)"/g;
+				let attrMatch: RegExpExecArray | null;
+				while ((attrMatch = attrRegex.exec(attrs)) !== null) {
+					const [, attrName, attrValue] = attrMatch;
+					additionalProps[attrName] = attrValue;
+				}
+			}
+
+			// Clone the component with the parsed content and additional props
+			result.push(
+				cloneElement(
+					component,
+					{ key: `trans-${keyCounter++}`, ...additionalProps },
+					...parsedContent,
+				),
+			);
 		} else {
 			// If no component found, keep the original text
 			result.push(fullMatch);
