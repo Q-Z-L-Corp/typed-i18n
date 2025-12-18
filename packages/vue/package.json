@@ -1,6 +1,6 @@
 {
 	"name": "@qzlcorp/typed-i18n-vue",
-	"version": "1.0.4",
+	"version": "1.1.0",
 	"description": "Vue bindings for @qzlcorp/typed-i18n",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
@@ -41,7 +41,7 @@
 	],
 	"license": "MIT",
 	"peerDependencies": {
-		"@qzlcorp/typed-i18n": "^1.0.0",
+		"@qzlcorp/typed-i18n": "^1.1.0",
 		"vue": "^3.0.0"
 	},
 	"devDependencies": {

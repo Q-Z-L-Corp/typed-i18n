@@ -1,6 +1,6 @@
 {
 	"name": "@qzlcorp/typed-i18n",
-	"version": "1.0.4",
+	"version": "1.1.0",
 	"description": "Type-safe i18n library with zero dependencies",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
