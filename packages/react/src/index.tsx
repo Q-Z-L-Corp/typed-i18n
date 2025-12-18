@@ -19,6 +19,8 @@ import type {
 	LocalesFromModules,
 	Params,
 	TranslateOptions,
+	TranslateOptionsWithObjects,
+	TranslateOptionsWithoutObjects,
 	JSONValue,
 } from "@qzlcorp/typed-i18n";
 
@@ -93,10 +95,7 @@ export function I18nProvider<TModules extends Record<string, I18nModule>>({
 // useTranslation Hook
 // -------------------------
 export interface UseTranslationResult<TModules extends Record<string, I18nModule>> {
-	t: {
-		(key: ModuleKeys<TModules>, params?: Params): string;
-		(key: ModuleKeys<TModules>, options?: TranslateOptions): string | JSONValue;
-	};
+	t: I18nInstance<TModules>["t"];
 	locale: LocalesFromModules<TModules>;
 }
 
