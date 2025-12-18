@@ -231,14 +231,40 @@ interface TranslateOptions {
 // Simple parameter interpolation
 i18n.t('common.greeting', { name: 'World' });
 
-// Return nested objects (i18next compatible)
+// Return nested objects with FULL TYPE SAFETY (i18next compatible)
 const stats = i18n.t('dashboard.stats', { returnObjects: true });
+// TypeScript infers the exact type at that path!
+// stats has type: { clicks: string; views: string }
+console.log(stats.clicks); // ✅ Fully typed property access
+
+// Get deeply nested objects
+const config = i18n.t('app.config', { returnObjects: true });
+// config has the exact type from your JSON structure
 
 // Both params and returnObjects
 const data = i18n.t('config.settings', { 
   params: { count: 5 }, 
-  returnObjects: false 
+  returnObjects: false  // Returns string with interpolation
 });
+```
+
+**Type-safe `returnObjects`**: When you use `returnObjects: true`, TypeScript automatically infers the exact type at that translation path. This means:
+- ✅ No manual type assertions needed
+- ✅ Full autocomplete for nested properties
+- ✅ Compile-time errors if you access wrong properties
+- ✅ Refactoring safety across your codebase
+
+```typescript
+// Example with nested structure
+const dashboard = i18n.t('dashboard', { returnObjects: true });
+// dashboard is typed as: {
+//   title: string;
+//   stats: { clicks: string; views: string; }
+//   settings: { theme: string; }
+// }
+
+dashboard.stats.clicks;   // ✅ Typed!
+dashboard.stats.invalid;  // ❌ Type error!
 ```
 
 **Important**: `addModule()` returns a new instance with updated types to preserve type safety:

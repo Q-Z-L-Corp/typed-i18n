@@ -142,6 +142,38 @@ export interface TranslateOptions {
 	returnObjects?: boolean;
 }
 
+export interface TranslateOptionsWithObjects extends Omit<TranslateOptions, "returnObjects"> {
+	/** Return the full object/array instead of string (like i18next returnObjects) */
+	returnObjects: true;
+}
+
+export interface TranslateOptionsWithoutObjects extends Omit<TranslateOptions, "returnObjects"> {
+	/** Return the full object/array instead of string (like i18next returnObjects) */
+	returnObjects?: false;
+}
+
+// -------------------------
+// Type utility to extract value at path
+// -------------------------
+type PathValue<T, P extends string> = P extends `${infer K}.${infer Rest}`
+	? K extends keyof T
+		? PathValue<T[K], Rest>
+		: never
+	: P extends keyof T
+		? T[P]
+		: never;
+
+type ModulePathValue<
+	TModules extends Record<string, I18nModule>,
+	K extends ModuleKeys<TModules>,
+> = K extends `${infer NS}.${infer Path}`
+	? NS extends keyof TModules
+		? TModules[NS] extends I18nModule<any, infer Ref>
+			? PathValue<Ref, Path>
+			: never
+		: never
+	: never;
+
 // -------------------------
 // Module path utilities
 // -------------------------
@@ -176,8 +208,15 @@ export interface I18nOptions<TModules extends Record<string, I18nModule>> {
 export interface I18nInstance<TModules extends Record<string, I18nModule>> {
 	/** Translate a key with optional parameters or options */
 	t: {
+		// With returnObjects: true - returns the actual typed value (MUST BE FIRST)
+		<K extends ModuleKeys<TModules>>(
+			key: K,
+			options: TranslateOptionsWithObjects,
+		): ModulePathValue<TModules, K>;
+		// With returnObjects: false or undefined - returns string
+		<K extends ModuleKeys<TModules>>(key: K, options: TranslateOptionsWithoutObjects): string;
+		// String interpolation (default behavior, no options)
 		<K extends ModuleKeys<TModules>>(key: K, params?: Params): string;
-		<K extends ModuleKeys<TModules>>(key: K, options?: TranslateOptions): string | JSONValue;
 	};
 	/** Get current locale */
 	getLocale: () => LocalesFromModules<TModules>;

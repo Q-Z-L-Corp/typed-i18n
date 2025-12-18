@@ -186,4 +186,34 @@ describe("typed-i18n modern API", () => {
 		const obj = i18n.t("common.dashboard.stats", { returnObjects: true });
 		expect(obj).toEqual({ clicks: "{{count}} clicks" });
 	});
+
+	it("infers correct types with returnObjects option", () => {
+		const common = defineModule("common")<typeof en>({
+			en,
+			fr,
+		});
+
+		const i18n = createI18n({
+			locale: "en",
+			modules: { common },
+		});
+
+		// Without returnObjects - should be string
+		const str: string = i18n.t("common.common.ok");
+		expect(str).toBe("OK");
+
+		// With returnObjects: false - should be string
+		const str2: string = i18n.t("common.common.ok", { returnObjects: false });
+		expect(str2).toBe("OK");
+
+		// With returnObjects: true - should be the actual object type
+		const dashboard = i18n.t("common.dashboard", { returnObjects: true });
+		// TypeScript should infer this as: { title: string; stats: { clicks: string } }
+		expect(dashboard.title).toBe("Dashboard");
+		expect(dashboard.stats.clicks).toBe("{{count}} clicks");
+
+		// Nested object access should be typed
+		const stats = i18n.t("common.dashboard.stats", { returnObjects: true });
+		expect(stats.clicks).toBe("{{count}} clicks");
+	});
 });
