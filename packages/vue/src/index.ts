@@ -6,6 +6,8 @@ import type {
 	LocalesFromModules,
 	Params,
 	TranslateOptions,
+	TranslateOptionsWithObjects,
+	TranslateOptionsWithoutObjects,
 	JSONValue,
 } from "@qzlcorp/typed-i18n";
 
@@ -61,11 +63,7 @@ export function useI18n<TModules extends Record<string, I18nModule>>() {
 	}
 
 	return {
-		t: ((key: ModuleKeys<TModules>, paramsOrOptions?: Params | TranslateOptions) =>
-			state.i18n.t(key, paramsOrOptions as any)) as {
-			(key: ModuleKeys<TModules>, params?: Params): string;
-			(key: ModuleKeys<TModules>, options?: TranslateOptions): string | JSONValue;
-		},
+		t: state.i18n.t as I18nInstance<TModules>["t"],
 		locale: computed(() => state.locale),
 		setLocale: (locale: LocalesFromModules<TModules>) => {
 			state.i18n.setLocale(locale);
